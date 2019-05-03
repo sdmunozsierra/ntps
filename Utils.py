@@ -11,5 +11,5 @@ def get_timestamp():
     timestamp = time.time()
     # Format the timestamp
     timestamp = datetime.datetime.fromtimestamp(timestamp).strftime(
-        '%Y-%m-%d %H:%M:%S')
+        '%H:%M:%S')
     return timestamp
