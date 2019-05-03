@@ -11,3 +11,10 @@ Isai Gonzalez, Julio De La Cruz, Oscar Galindo, Alan Caldelas, Sergio Sierra
 * The program uses PyQt5 for the graphical elements.
 * To run the GUI, use python to run the NTPS.py file. The other files included are overlays like the "Create/Edit Hook Window". These files must be in the same directory.
 * We did not include error overlays as there would be no way to trigger them in this version of the project.
+
+## Requirements
+This project requires python 3 and modules listed below that can be installed via `pip install "packagename"`.
+
+### Pip
+* pytest - Required for running tests.
+* freezegun - Required for running tests that are based on time module.
