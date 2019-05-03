@@ -1,6 +1,10 @@
+"""
+PCAP class will provide its information to the classes that need it.
+"""
 import os
 
-class PCAP:    
+
+class PCAP:
     def __init__(self, name, timestamp):
         self.packets = list()
         self.name = name
@@ -11,22 +15,23 @@ class PCAP:
         self.packets.append(packet)
 
     def removePacket(self, packet):
-        self.remove(packet)
+        self.packets.remove(packet)
 
     def save(self):
-        ### TO DO: save to file
-        if(not os.path.exists("./PCAPs"):
-               os.makedirs("./PCAPs")
+        # TODO: save to file
+        if(not os.path.exists("./PCAPs")):
+            os.makedirs("./PCAPs")
 
-        filepath = "/PCAPs/" + name + ".txt"
+        filepath = "{}{}{}".format("/PCAPs/", self.name, ".txt")
 
         file = open(filepath, 'w')
         file.write("Hello")
         file.close()
 
     def load(self):
-        ### TO DO: Transform info to packets
+        # TODO: Transform info to packets
+        pass
 
-pcap = PCAP("test",0)
+
+pcap = PCAP("test", 0)
 pcap.save()
-               

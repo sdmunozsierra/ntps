@@ -1,11 +1,12 @@
-#
-# Stuff
-#
+"""
+PCAP class will provide its information to the classes that need it.
+"""
+
 
 class Queue:
     packets = list()
     size = 100
-    
+
     def __init__(self, size):
         self.size = size
 
@@ -35,5 +36,3 @@ class Queue:
 
     def getSize(self):
         return this.size
-
-    
