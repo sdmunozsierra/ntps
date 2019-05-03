@@ -4,7 +4,7 @@
 # import sys
 # sys.path.append('../../')
 from freezegun import freeze_time
-from ntps import Utils
+from ntps import pyutils
 
 
 @freeze_time("2019-04-04 04:00:00")
@@ -13,5 +13,5 @@ def test_get_timestamp():
     # Time is frozen at 2019-04-04 04:00:00
 
     # Test get_timestamp output
-    timestamp = Utils.get_timestamp()
+    timestamp = pyutils.get_timestamp()
     assert timestamp == "04:00:00"
