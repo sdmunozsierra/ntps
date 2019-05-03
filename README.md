@@ -18,3 +18,7 @@ This project requires python 3 and modules listed below that can be installed vi
 ### Pip
 * pytest - Required for running tests.
 * freezegun - Required for running tests that are based on time module.
+
+### Testing
+
+To run tests via pytest run ```pytest -v Tests/``` in the root directory.
