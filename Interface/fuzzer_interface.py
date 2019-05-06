@@ -8,3 +8,5 @@ class fuzzerInterface:
 
     def saveFuzzed(self, packets):
         pass
+
+#afl-fuzz -i [input_directory] -o [output_directory] ./[executable_to_fuzz] @@
