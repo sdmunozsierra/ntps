@@ -10,7 +10,7 @@ class IPTable:
     def toggleIPTableState(self):
 
         if (self.status == False):
-            # set the IPtable rules -A to  -j to jump if it matches rule to NFQUEUE is
+            # set the IPtable rules -A is to append a new rule to the exisiting rules  -j to jump if it matches rule to NFQUEUE is
             rule = "iptables -A OUTPUT -j NFQUEUE --queue-num 1" 
             os.system(rule)
             self.nfq.bind(1, "new packet function")
