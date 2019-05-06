@@ -3,6 +3,7 @@ from scapy.all import *
 import os
 class IPTable:
     nfq= NetfilterQueue()
+
     def __init__(self):
         self.status = False
 
