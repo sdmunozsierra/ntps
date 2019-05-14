@@ -7,11 +7,17 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from createEditHook import Ui_CreateEditHookWindow
-from createEditCollection import Ui_CreateEditCollectionWindow
-from saveFuzzedPackets import Ui_saveFuzzedWindow
+from GUI.createEditHook import Ui_CreateEditHookWindow
+from GUI.createEditCollection import Ui_CreateEditCollectionWindow
+from GUI.saveFuzzedPackets import Ui_saveFuzzedWindow
+
+from Packet.packet import Packet
+from Packet.packet_manager import PacketManager
+from Packet.pcap import PCAP
 
 class Ui_Main_Dialog(object):
+    packetManager = PacketManager()
+
     def openCreateEditHookWindow(self):
         self.window = QtWidgets.QDialog()
         self.ui = Ui_CreateEditHookWindow()
@@ -31,6 +37,48 @@ class Ui_Main_Dialog(object):
         self.ui.setupUi(self.window)
         self.window.show()
 
+    def loadPcap(self):
+        self.packetManager.loadPcap("test3.pcap")
+        packets = self.packetManager.getPcapPackets()
+        #dList = QtEidgets.QTreeWidget(self.dissectedTab_2)
+        #dList.setObjectName("dList")
+
+        i = 0
+        #item1 = QtWidgets.QTreeWidgetItem(self.dissectedList_2)
+        #self.dissectedList_2.topLevelItem(0).setText(0, QtCore.QCoreApplication.translate("Main_Dialog", "Plox"))
+
+        _translate = QtCore.QCoreApplication.translate
+        print("test")
+        while i < len(packets):#for packet in packets:
+            #print("plox")
+            item = QtWidgets.QTreeWidgetItem(self.dissectedList_2)
+            self.dissectedList_2.topLevelItem(i).setText(0, _translate("Main_Dialog",packets[i].name))
+            j = 0
+            layer = packets[i].getLayers()
+            
+            while j < len(layer):
+            #for layer in packets[i].getLayers():
+                subitem = QtWidgets.QTreeWidgetItem(item)
+                self.dissectedList_2.topLevelItem(i).child(j).setText(0, _translate("Main_Dialog", layer[j].name))
+                j += 1
+
+            
+            i += 1
+            #packets[i].show()
+
+            
+
+            
+            #dissectedList.topLevelItem(
+            
+            
+        #self.loadedPcap = Pcap(name, 0)
+        #PacketManager.loadedPcap.load()
+        #self.displayPcap = true
+        
+
+
+        
     def setupUi(self, Main_Dialog):
         Main_Dialog.setObjectName("Main_Dialog")
         Main_Dialog.resize(1061, 900)
@@ -375,6 +423,12 @@ class Ui_Main_Dialog(object):
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.ToolTipText, brush)
+
+
+
+        #################################### PCAP VIEW ###################
+
+        
         self.Content_View.setPalette(palette)
         self.Content_View.setAutoFillBackground(True)
         self.Content_View.setAlignment(QtCore.Qt.AlignCenter)
@@ -447,6 +501,11 @@ class Ui_Main_Dialog(object):
         self.horizontalLayout_21.addWidget(self.pcapFilePath)
         self.pcapOpenButton = QtWidgets.QPushButton(self.pcapFilePanel)
         self.pcapOpenButton.setObjectName("pcapOpenButton")
+
+
+        self.pcapOpenButton.clicked.connect(self.loadPcap)
+
+        
         self.horizontalLayout_21.addWidget(self.pcapOpenButton)
         self.pcapCancelButton = QtWidgets.QPushButton(self.pcapFilePanel)
         self.pcapCancelButton.setObjectName("pcapCancelButton")
@@ -536,14 +595,14 @@ class Ui_Main_Dialog(object):
         self.verticalLayout_38.setObjectName("verticalLayout_38")
         self.dissectedList_2 = QtWidgets.QTreeWidget(self.dissectedTab_2)
         self.dissectedList_2.setObjectName("dissectedList_2")
-        item_0 = QtWidgets.QTreeWidgetItem(self.dissectedList_2)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        item_1 = QtWidgets.QTreeWidgetItem(item_0)
-        item_0 = QtWidgets.QTreeWidgetItem(self.dissectedList_2)
-        item_0 = QtWidgets.QTreeWidgetItem(self.dissectedList_2)
-        item_0 = QtWidgets.QTreeWidgetItem(self.dissectedList_2)
+        #item_0 = QtWidgets.QTreeWidgetItem(self.dissectedList_2)
+        #item_1 = QtWidgets.QTreeWidgetItem(item_0)
+        #item_1 = QtWidgets.QTreeWidgetItem(item_0)
+        #item_1 = QtWidgets.QTreeWidgetItem(item_0)
+        #item_1 = QtWidgets.QTreeWidgetItem(item_0)
+        #item_0 = QtWidgets.QTreeWidgetItem(self.dissectedList_2)
+        #item_0 = QtWidgets.QTreeWidgetItem(self.dissectedList_2)
+        #item_0 = QtWidgets.QTreeWidgetItem(self.dissectedList_2)
         self.dissectedList_2.header().setVisible(False)
         self.verticalLayout_38.addWidget(self.dissectedList_2)
         self.packetDisplay_2.addTab(self.dissectedTab_2, "")
@@ -798,6 +857,12 @@ class Ui_Main_Dialog(object):
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
+
+
+
+############################################ PACKET VIEW #####################################
+
+        
         self.Live_Packet_View.setPalette(palette)
         self.Live_Packet_View.setAutoFillBackground(True)
         self.Live_Packet_View.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -1215,6 +1280,12 @@ class Ui_Main_Dialog(object):
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
+
+
+
+################################# HOOK VIEW ###########################################
+
+        
         self.Hook_view.setPalette(palette)
         self.Hook_view.setAutoFillBackground(True)
         self.Hook_view.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -1793,6 +1864,12 @@ class Ui_Main_Dialog(object):
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
+
+
+################################ HOOK COLLECTION ####################################
+
+
+        
         self.Hook_Collection_View.setPalette(palette)
         self.Hook_Collection_View.setAutoFillBackground(True)
         self.Hook_Collection_View.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -2510,14 +2587,14 @@ class Ui_Main_Dialog(object):
         self.dissectedList_2.headerItem().setText(0, _translate("Main_Dialog", "packets"))
         __sortingEnabled = self.dissectedList_2.isSortingEnabled()
         self.dissectedList_2.setSortingEnabled(False)
-        self.dissectedList_2.topLevelItem(0).setText(0, _translate("Main_Dialog", "Frame 718: frame, eth , ip, tcp"))
-        self.dissectedList_2.topLevelItem(0).child(0).setText(0, _translate("Main_Dialog", "Frame...."))
-        self.dissectedList_2.topLevelItem(0).child(1).setText(0, _translate("Main_Dialog", "Ethernet..."))
-        self.dissectedList_2.topLevelItem(0).child(2).setText(0, _translate("Main_Dialog", "Internet..."))
-        self.dissectedList_2.topLevelItem(0).child(3).setText(0, _translate("Main_Dialog", "Transmission"))
-        self.dissectedList_2.topLevelItem(1).setText(0, _translate("Main_Dialog", "Frame..."))
-        self.dissectedList_2.topLevelItem(2).setText(0, _translate("Main_Dialog", "Frame....."))
-        self.dissectedList_2.topLevelItem(3).setText(0, _translate("Main_Dialog", "Frame......."))
+        #self.dissectedList_2.topLevelItem(0).setText(0, _translate("Main_Dialog", "Frame 718: frame, eth , ip, tcp"))
+        #self.dissectedList_2.topLevelItem(0).child(0).setText(0, _translate("Main_Dialog", "Frame...."))
+        #self.dissectedList_2.topLevelItem(0).child(1).setText(0, _translate("Main_Dialog", "Ethernet..."))
+        #self.dissectedList_2.topLevelItem(0).child(2).setText(0, _translate("Main_Dialog", "Internet..."))
+        #self.dissectedList_2.topLevelItem(0).child(3).setText(0, _translate("Main_Dialog", "Transmission"))
+        #self.dissectedList_2.topLevelItem(1).setText(0, _translate("Main_Dialog", "Frame..."))
+        #self.dissectedList_2.topLevelItem(2).setText(0, _translate("Main_Dialog", "Frame....."))
+        #self.dissectedList_2.topLevelItem(3).setText(0, _translate("Main_Dialog", "Frame......."))
         self.dissectedList_2.setSortingEnabled(__sortingEnabled)
         self.packetDisplay_2.setTabText(self.packetDisplay_2.indexOf(self.dissectedTab_2), _translate("Main_Dialog", "Dissected"))
         self.binaryList_2.headerItem().setText(0, _translate("Main_Dialog", "packets"))

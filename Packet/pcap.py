@@ -4,14 +4,20 @@ PCAP class will provide its information to the classes that need it.
 import os
 from scapy.all import *
 
+from packet import Packet
+
 class PCAP:
     def __init__(self, name, timestamp):
         self.packets = list()
         self.testpackets = list()
         self.name = name
         self.timestamp = timestamp
-        self.load()
+        #self.load()
 
+
+    def setName(self, newname):
+        self.name = newname
+        
     def addPacket(self, packet):
         self.packets.append(packet)
 
@@ -32,7 +38,7 @@ class PCAP:
 
     def load(self):
         # TODO: Transform info to packets
-        pcapfile = rdpcap('test3.pcapng')
+        pcapfile = rdpcap('./Packet/test3.pcap')
         i = 1
         for packet in pcapfile:
             self.packets.append(packet)
@@ -50,9 +56,11 @@ class PCAP:
             pktname = "Frame " + str(i+1) + ": "
             for layer in test[i]:
                 pktname += layer.name + " "
+            #print(pktname)
             print(pktname)
-
             testpkt = Packet(pktname, test[i])
+
+            print(testpkt.name)
             #print(testpkt.getName())
             self.testpackets.append(testpkt)
             
@@ -69,7 +77,10 @@ class PCAP:
             yield x
         print("!")
 
-pcap = PCAP("test", 0)
+    def getPackets(self):
+        return self.testpackets
+
+#pcap = PCAP("test", 0)
 #pcap.save()
 #pcap.load()
 
