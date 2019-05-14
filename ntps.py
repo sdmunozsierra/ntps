@@ -52,30 +52,43 @@ class Ui_Main_Dialog(object):
         while i < len(packets):#for packet in packets:
             #print("plox")
             item = QtWidgets.QTreeWidgetItem(self.dissectedList_2)
-            self.dissectedList_2.topLevelItem(i).setText(0, _translate("Main_Dialog",packets[i].name))
+            item.setText(0, _translate("Main_Dialog", packets[i].name))
+            #self.dissectedList_2.topLevelItem(i).setText(0, _translate("Main_Dialog",packets[i].name))
+            self.dissectedList_2.addTopLevelItem(item)
             j = 0
             layer = packets[i].getLayers()
             
             while j < len(layer):
             #for layer in packets[i].getLayers():
                 subitem = QtWidgets.QTreeWidgetItem(item)
-                self.dissectedList_2.topLevelItem(i).child(j).setText(0, _translate("Main_Dialog", layer[j].name))
+                subitemText = layer[j].name + ": " + layer[j].summary()
+                subitem.setText(0, _translate("Main_Dialog", subitemText))
+                #self.dissectedList_2.topLevelItem(i).child(j).setText(0, _translate("Main_Dialog", layer[j]))
+                #item.itemChanged.connect(self.displayFields)
+                
+                #subitem.clicked.connect(self.displayFields)            
+                item.addChild(subitem)
                 j += 1
-
-            
             i += 1
-            #packets[i].show()
 
-            
+        self.dissectedList_2.itemSelectionChanged.connect(self.displayFields)
 
-            
-            #dissectedList.topLevelItem(
-            
-            
-        #self.loadedPcap = Pcap(name, 0)
-        #PacketManager.loadedPcap.load()
-        #self.displayPcap = true
+    def displayFields(self):
+        item = self.dissectedList_2.selectedItems()
+        if item[0].childCount() > 0:
+            return
+
+        itemparent = item[0].parent()
+        #self.fieldAttList_2.topLevelItem(0).setText(0, _translate("Main_Dialog", "icmp type"))
+        packetname = itemparent.text(0)
+
+        ######### TODO
+
+
+        itemtext = item[0].text(0)
+        layername = itemtext.split(':')
         
+        print(itemtext)
 
 
         
@@ -2609,22 +2622,22 @@ class Ui_Main_Dialog(object):
         self.fieldAttList_2.headerItem().setText(3, _translate("Main_Dialog", "Display Format"))
         __sortingEnabled = self.fieldAttList_2.isSortingEnabled()
         self.fieldAttList_2.setSortingEnabled(False)
-        self.fieldAttList_2.topLevelItem(0).setText(0, _translate("Main_Dialog", "icmp type"))
-        self.fieldAttList_2.topLevelItem(0).setText(1, _translate("Main_Dialog", "08"))
-        self.fieldAttList_2.topLevelItem(0).setText(2, _translate("Main_Dialog", "0"))
-        self.fieldAttList_2.topLevelItem(0).setText(3, _translate("Main_Dialog", "Format"))
-        self.fieldAttList_2.topLevelItem(1).setText(0, _translate("Main_Dialog", "icmp seq"))
-        self.fieldAttList_2.topLevelItem(1).setText(1, _translate("Main_Dialog", "0f00"))
-        self.fieldAttList_2.topLevelItem(1).setText(2, _translate("Main_Dialog", "2"))
-        self.fieldAttList_2.topLevelItem(1).setText(3, _translate("Main_Dialog", "Format"))
-        self.fieldAttList_2.topLevelItem(2).setText(0, _translate("Main_Dialog", "icmp code"))
-        self.fieldAttList_2.topLevelItem(2).setText(1, _translate("Main_Dialog", "00"))
-        self.fieldAttList_2.topLevelItem(2).setText(2, _translate("Main_Dialog", "0"))
-        self.fieldAttList_2.topLevelItem(2).setText(3, _translate("Main_Dialog", "Format"))
-        self.fieldAttList_2.topLevelItem(3).setText(0, _translate("Main_Dialog", "icmp checksum"))
-        self.fieldAttList_2.topLevelItem(3).setText(1, _translate("Main_Dialog", "6861"))
-        self.fieldAttList_2.topLevelItem(3).setText(2, _translate("Main_Dialog", "1"))
-        self.fieldAttList_2.topLevelItem(3).setText(3, _translate("Main_Dialog", "Format"))
+        #self.fieldAttList_2.topLevelItem(0).setText(0, _translate("Main_Dialog", "icmp type"))
+        #self.fieldAttList_2.topLevelItem(0).setText(1, _translate("Main_Dialog", "08"))
+        #self.fieldAttList_2.topLevelItem(0).setText(2, _translate("Main_Dialog", "0"))
+        #self.fieldAttList_2.topLevelItem(0).setText(3, _translate("Main_Dialog", "Format"))
+        #self.fieldAttList_2.topLevelItem(1).setText(0, _translate("Main_Dialog", "icmp seq"))
+        #self.fieldAttList_2.topLevelItem(1).setText(1, _translate("Main_Dialog", "0f00"))
+        #self.fieldAttList_2.topLevelItem(1).setText(2, _translate("Main_Dialog", "2"))
+        #self.fieldAttList_2.topLevelItem(1).setText(3, _translate("Main_Dialog", "Format"))
+        #self.fieldAttList_2.topLevelItem(2).setText(0, _translate("Main_Dialog", "icmp code"))
+        #self.fieldAttList_2.topLevelItem(2).setText(1, _translate("Main_Dialog", "00"))
+        #self.fieldAttList_2.topLevelItem(2).setText(2, _translate("Main_Dialog", "0"))
+        #self.fieldAttList_2.topLevelItem(2).setText(3, _translate("Main_Dialog", "Format"))
+        #self.fieldAttList_2.topLevelItem(3).setText(0, _translate("Main_Dialog", "icmp checksum"))
+        #self.fieldAttList_2.topLevelItem(3).setText(1, _translate("Main_Dialog", "6861"))
+        #self.fieldAttList_2.topLevelItem(3).setText(2, _translate("Main_Dialog", "1"))
+        #self.fieldAttList_2.topLevelItem(3).setText(3, _translate("Main_Dialog", "Format"))
         self.fieldAttList_2.setSortingEnabled(__sortingEnabled)
         self.packetSaveButton_2.setText(_translate("Main_Dialog", "Save Modification"))
         self.forwardButton_2.setText(_translate("Main_Dialog", "Forward"))
