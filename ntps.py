@@ -71,20 +71,51 @@ class Ui_Main_Dialog(object):
                 j += 1
             i += 1
 
-        self.dissectedList_2.itemSelectionChanged.connect(self.displayFields)
+        #self.dissectedList_2.itemSelectionChanged.connect(self.displayPcapFields)
 
-    def displayFields(self):
+    def displayPcapFields(self):
         item = self.dissectedList_2.selectedItems()
         if item[0].childCount() > 0:
             return
 
         itemparent = item[0].parent()
-        #self.fieldAttList_2.topLevelItem(0).setText(0, _translate("Main_Dialog", "icmp type"))
         packetname = itemparent.text(0)
 
-        ######### TODO
+        selectedPacket = packetManager.getPcapPacket(packetname)
+        if selectedPacket == None:
+            return
 
+        
+        layerNum = 0
+        while layerNum < itemparent.childCount():
+            if itemparent.child(layerNum).text(0) == item.text(0):
+                break
+            layerNum += 1
 
+        #self.fieldAttList_2.topLevelItem(0).setText(0, _translate("Main_Dialog", "icmp type"))
+        layer = selectedPacket.getLayers[layerNum]
+        
+        i = 0
+
+        _translate = QtCore.QCoreApplication.translate
+        print("test2")
+        while i < len(layer):#for packet in packets:
+            item = QtWidgets.QTreeWidgetItem(self.fieldAttList_2)
+            item.setText(0, _translate("Main_Dialog", layer.name))
+            self.dissectedList_2.addTopLevelItem(item)
+            j = 0
+            layer = packets[i].getLayers()
+            
+            while j < len(layer):
+                subitem = QtWidgets.QTreeWidgetItem(item)
+                subitemText = layer[j].name + ": " + layer[j].summary()
+                subitem.setText(0, _translate("Main_Dialog", subitemText))
+                item.addChild(subitem)
+                j += 1
+            i += 1
+
+        
+        
         itemtext = item[0].text(0)
         layername = itemtext.split(':')
         
@@ -699,10 +730,10 @@ class Ui_Main_Dialog(object):
         font.setBold(True)
         font.setWeight(75)
         self.fieldAttList_2.headerItem().setFont(3, font)
-        item_0 = QtWidgets.QTreeWidgetItem(self.fieldAttList_2)
-        item_0 = QtWidgets.QTreeWidgetItem(self.fieldAttList_2)
-        item_0 = QtWidgets.QTreeWidgetItem(self.fieldAttList_2)
-        item_0 = QtWidgets.QTreeWidgetItem(self.fieldAttList_2)
+        #item_0 = QtWidgets.QTreeWidgetItem(self.fieldAttList_2)
+        #item_0 = QtWidgets.QTreeWidgetItem(self.fieldAttList_2)
+        #item_0 = QtWidgets.QTreeWidgetItem(self.fieldAttList_2)
+        #item_0 = QtWidgets.QTreeWidgetItem(self.fieldAttList_2)
         self.verticalLayout_41.addWidget(self.fieldAttList_2)
         self.horizontalLayout_13 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_13.setObjectName("horizontalLayout_13")

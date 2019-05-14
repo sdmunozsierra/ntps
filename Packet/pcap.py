@@ -80,6 +80,13 @@ class PCAP:
     def getPackets(self):
         return self.testpackets
 
+    def getPacket(self,name):
+        for packet in self.testpackets:
+            if(packet.name == name):
+                return packet
+
+        return None
+
 #pcap = PCAP("test", 0)
 #pcap.save()
 #pcap.load()
