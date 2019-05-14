@@ -6,6 +6,8 @@
 #
 # WARNING! All changes made in this file will be lost!
 
+import subprocess
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from GUI.createEditHook import Ui_CreateEditHookWindow
 from GUI.createEditCollection import Ui_CreateEditCollectionWindow
@@ -14,6 +16,7 @@ from GUI.saveFuzzedPackets import Ui_saveFuzzedWindow
 from Packet.packet import Packet
 from Packet.packet_manager import PacketManager
 from Packet.pcap import PCAP
+
 
 class Ui_Main_Dialog(object):
     packetManager = PacketManager()
@@ -72,6 +75,24 @@ class Ui_Main_Dialog(object):
             i += 1
 
         #self.dissectedList_2.itemSelectionChanged.connect(self.displayPcapFields)
+        
+        self.dissectedList_2.itemSelectionChanged.connect(self.hookTest)
+
+    def hookTest(self):
+        item = self.dissectedList_2.selectedItems()
+        if item[0].childCount() > 0:
+            return
+
+        itemparent = item[0].parent()
+        packetname = itemparent.text(0)
+
+        selectedPacket = packetManager.getPcapPacket(packetname)
+        if selectedPacket == None:
+            return
+
+        test = subprocess.run(Python,'TCPsport.py', selectedpacket)
+        print("hhoktest")
+        print(test)
 
     def displayPcapFields(self):
         item = self.dissectedList_2.selectedItems()
@@ -85,7 +106,6 @@ class Ui_Main_Dialog(object):
         if selectedPacket == None:
             return
 
-        
         layerNum = 0
         while layerNum < itemparent.childCount():
             if itemparent.child(layerNum).text(0) == item.text(0):
@@ -100,9 +120,10 @@ class Ui_Main_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         print("test2")
         while i < len(layer):#for packet in packets:
+            fields = layer.getFields()
             item = QtWidgets.QTreeWidgetItem(self.fieldAttList_2)
-            item.setText(0, _translate("Main_Dialog", layer.name))
-            self.dissectedList_2.addTopLevelItem(item)
+            item.setText(0, _translate("Main_Dialog", fields[i].name))
+            self.fieldAttList_2.addTopLevelItem(item)
             j = 0
             layer = packets[i].getLayers()
             
