@@ -32,7 +32,13 @@ class Queue:
             packets.append(packet)
 
     def getPackets(self):
-        return this.packets
+        return packets
 
+    def getPacket(self,packetName):
+        for packet in packets:
+            if(packet.getName() == packetName):
+                retrun packet
+
+        return None
     def getSize(self):
         return this.size
