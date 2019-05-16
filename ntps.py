@@ -43,21 +43,17 @@ class Ui_Main_Dialog(object):
     def loadPcap(self):
 
         filebrowser = QtWidgets.QFileDialog()
-        filebrowser.setFileMode(QtWidgets.QFileDialog.AnyFile)
-        #filebrowser.setFilter("PCAP files (*.pcap)")
-        #filename = QString()
-        filename = QtWidgets.QFileDialog.getOpenFileName()
-        #song, _ = QtWidgets.QFileDialog.getOpenFileName()
-        #print(song[0])
-        
-        #if filebrowser.exec():
-         #   filename = filebrowser.getOpenFileName(self, "QFileDialog.getOpenFileName()", "", "PCAP file (*.pcap)")
+        filebrowser.setNameFilters(["PCAP files (*.pcap)"])
+        filebrowser.selectNameFilter("PCAP files (*.pcap)")
+        filters = "PCAP files (*.pcap)"
+        selectedfilter = "PCAP files (*.pcap))"
 
+        filename = QtWidgets.QFileDialog.getOpenFileName(QtWidgets.QFileDialog(),"File Dialog", '', filters, selectedfilter)
 
-         #print("test")
+        if filename[0] == '':
+            return
         
         self.dissectedList_2.clear()
-        print(filename[0])
         self.packetManager.loadPcap(filename[0])
         packets = self.packetManager.getPcapPackets()
         #dList = QtEidgets.QTreeWidget(self.dissectedTab_2)
