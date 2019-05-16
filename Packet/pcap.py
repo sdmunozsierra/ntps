@@ -79,7 +79,7 @@ class PCAP:
             #print(x.payload)
             x = x.payload
             yield x
-        print("!")
+        #print("!")
 
     def getPackets(self):
         return self.testpackets

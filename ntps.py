@@ -9,6 +9,7 @@
 import subprocess
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import pyqtSlot, QObject
 from GUI.createEditHook import Ui_CreateEditHookWindow
 from GUI.createEditCollection import Ui_CreateEditCollectionWindow
 from GUI.saveFuzzedPackets import Ui_saveFuzzedWindow
@@ -18,8 +19,8 @@ from Packet.packet_manager import PacketManager
 from Packet.pcap import PCAP
 
 
-class Ui_Main_Dialog(object):
-    packetManager = PacketManager()
+class Ui_Main_Dialog(QObject):
+    #packetManager = PacketManager()
 
     def openCreateEditHookWindow(self):
         self.window = QtWidgets.QDialog()
@@ -52,45 +53,56 @@ class Ui_Main_Dialog(object):
 
         if filename[0] == '':
             return
-        
+
+        _translate = QtCore.QCoreApplication.translate
+
+        self.pcapFilePath.setText(_translate("Main_Dialog", filename[0]))
         self.dissectedList_2.clear()
         self.packetManager.loadPcap(filename[0])
         packets = self.packetManager.getPcapPackets()
-        #dList = QtEidgets.QTreeWidget(self.dissectedTab_2)
-        #dList.setObjectName("dList")
 
         i = 0
-        #item1 = QtWidgets.QTreeWidgetItem(self.dissectedList_2)
-        #self.dissectedList_2.topLevelItem(0).setText(0, QtCore.QCoreApplication.translate("Main_Dialog", "Plox"))
 
-        _translate = QtCore.QCoreApplication.translate
         print("test")
         while i < len(packets):#for packet in packets:
-            #print("plox")
             item = QtWidgets.QTreeWidgetItem(self.dissectedList_2)
             item.setText(0, _translate("Main_Dialog", packets[i].name))
-            #self.dissectedList_2.topLevelItem(i).setText(0, _translate("Main_Dialog",packets[i].name))
             self.dissectedList_2.addTopLevelItem(item)
             j = 0
             layer = packets[i].getLayers()
             
             while j < len(layer):
-            #for layer in packets[i].getLayers():
                 subitem = QtWidgets.QTreeWidgetItem(item)
                 subitemText = layer[j].show_name + ": " + layer[j].value#summary()
                 subitem.setText(0, _translate("Main_Dialog", subitemText))
-                #self.dissectedList_2.topLevelItem(i).child(j).setText(0, _translate("Main_Dialog", layer[j]))
-                #item.itemChanged.connect(self.displayFields)
-                
-                #subitem.clicked.connect(self.displayFields)            
                 item.addChild(subitem)
                 j += 1
             i += 1
 
         self.dissectedList_2.itemSelectionChanged.connect(self.displayPcapFields)
-        
-        #self.dissectedList_2.itemSelectionChanged.connect(self.hookTest)
 
+    @pyqtSlot(Packet)
+    def updateAddQueue(self,packet):
+        _translate = QtCore.QCoreApplication.translate
+
+        item = QtWidgets.QTreeWidgetItem(self.dissectedList_2)
+        item.setText(0, _translate("Main_Dialog", packet.name))
+        self.dissectedList_2.addTopLevelItem(item)
+        j = 0
+        layer = packet.getLayers()
+        
+        while j < len(layer):
+            subitem = QtWidgets.QTreeWidgetItem(item)
+            subitemText = layer[j].show_name + ": " + layer[j].value#summary()
+            subitem.setText(0, _translate("Main_Dialog", subitemText))
+            item.addChild(subitem)
+            j += 1
+
+    
+    def updateDropQueue(self,packet):
+        ###TODO            
+        pass
+        
     def hookTest(self):
         item = self.dissectedList_2.selectedItems()
         if item[0].childCount() > 0:
@@ -170,6 +182,12 @@ class Ui_Main_Dialog(object):
 
         
     def setupUi(self, Main_Dialog):
+        self.packetManager = PacketManager()
+        self.packetManager.queuesignalAdd.connect(self.updateAddQueue)
+
+
+
+
         Main_Dialog.setObjectName("Main_Dialog")
         Main_Dialog.resize(1061, 900)
         Main_Dialog.setMaximumSize(Main_Dialog.size())
