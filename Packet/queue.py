@@ -2,6 +2,7 @@
 PCAP class will provide its information to the classes that need it.
 """
 
+from packet import Packet
 
 class Queue:
     packets = list()

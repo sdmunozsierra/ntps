@@ -41,7 +41,24 @@ class Ui_Main_Dialog(object):
         self.window.show()
 
     def loadPcap(self):
-        self.packetManager.loadPcap("test3.pcap")
+
+        filebrowser = QtWidgets.QFileDialog()
+        filebrowser.setFileMode(QtWidgets.QFileDialog.AnyFile)
+        #filebrowser.setFilter("PCAP files (*.pcap)")
+        #filename = QString()
+        filename = QtWidgets.QFileDialog.getOpenFileName()
+        #song, _ = QtWidgets.QFileDialog.getOpenFileName()
+        #print(song[0])
+        
+        #if filebrowser.exec():
+         #   filename = filebrowser.getOpenFileName(self, "QFileDialog.getOpenFileName()", "", "PCAP file (*.pcap)")
+
+
+         #print("test")
+        
+        self.dissectedList_2.clear()
+        print(filename[0])
+        self.packetManager.loadPcap(filename[0])
         packets = self.packetManager.getPcapPackets()
         #dList = QtEidgets.QTreeWidget(self.dissectedTab_2)
         #dList.setObjectName("dList")
@@ -64,7 +81,7 @@ class Ui_Main_Dialog(object):
             while j < len(layer):
             #for layer in packets[i].getLayers():
                 subitem = QtWidgets.QTreeWidgetItem(item)
-                subitemText = layer[j].name + ": " + layer[j].summary()
+                subitemText = layer[j].show_name + ": " + layer[j].value#summary()
                 subitem.setText(0, _translate("Main_Dialog", subitemText))
                 #self.dissectedList_2.topLevelItem(i).child(j).setText(0, _translate("Main_Dialog", layer[j]))
                 #item.itemChanged.connect(self.displayFields)
@@ -74,9 +91,9 @@ class Ui_Main_Dialog(object):
                 j += 1
             i += 1
 
-        #self.dissectedList_2.itemSelectionChanged.connect(self.displayPcapFields)
+        self.dissectedList_2.itemSelectionChanged.connect(self.displayPcapFields)
         
-        self.dissectedList_2.itemSelectionChanged.connect(self.hookTest)
+        #self.dissectedList_2.itemSelectionChanged.connect(self.hookTest)
 
     def hookTest(self):
         item = self.dissectedList_2.selectedItems()
@@ -94,53 +111,65 @@ class Ui_Main_Dialog(object):
         print("hhoktest")
         print(test)
 
-    def displayPcapFields(self):
+    def displayPcapFields(self):  
         item = self.dissectedList_2.selectedItems()
         if item[0].childCount() > 0:
             return
-
+        #i = 0
+        self.fieldAttList_2.clear()
+        
         itemparent = item[0].parent()
         packetname = itemparent.text(0)
 
-        selectedPacket = packetManager.getPcapPacket(packetname)
+        selectedPacket = self.packetManager.getPcapPacket(packetname)
         if selectedPacket == None:
             return
 
         layerNum = 0
         while layerNum < itemparent.childCount():
-            if itemparent.child(layerNum).text(0) == item.text(0):
+            if itemparent.child(layerNum).text(0) == item[0].text(0):
                 break
             layerNum += 1
 
+        print(itemparent.child(layerNum).text(0))
         #self.fieldAttList_2.topLevelItem(0).setText(0, _translate("Main_Dialog", "icmp type"))
-        layer = selectedPacket.getLayers[layerNum]
-        
+        print(selectedPacket.name)
+
+        layer = selectedPacket.getLayers()
+        layer = layer[layerNum]
+        #layer.show()
         i = 0
 
+        fields = layer.getFields()
         _translate = QtCore.QCoreApplication.translate
         print("test2")
-        while i < len(layer):#for packet in packets:
-            fields = layer.getFields()
+        while i < len(fields):#for packet in packets:
+
             item = QtWidgets.QTreeWidgetItem(self.fieldAttList_2)
             item.setText(0, _translate("Main_Dialog", fields[i].name))
-            self.fieldAttList_2.addTopLevelItem(item)
-            j = 0
-            layer = packets[i].getLayers()
+            item.setText(1, _translate("Main_Dialog", str(fields[i].value)))
+            item.setText(2, _translate("Main_Dialog", str(fields[i].mask)))
+            item.setText(3, _translate("Main_Dialog", str(fields[i].display_format)))
             
-            while j < len(layer):
-                subitem = QtWidgets.QTreeWidgetItem(item)
-                subitemText = layer[j].name + ": " + layer[j].summary()
-                subitem.setText(0, _translate("Main_Dialog", subitemText))
-                item.addChild(subitem)
-                j += 1
+            
+            self.fieldAttList_2.addTopLevelItem(item)
+            #j = 0
+            #layer = packets[i].getLayers()
+           # 
+            #while j < len(layer):
+            #    subitem = QtWidgets.QTreeWidgetItem(item)
+            #    subitemText = layer[j].name + ": " + layer[j].summary()
+            #    subitem.setText(0, _translate("Main_Dialog", subitemText))
+            #    item.addChild(subitem)
+            #    j += 1
             i += 1
 
         
+        print("pog")
+        #itemtext = item[0].text(0)
+        #layername = itemtext.split(':')
         
-        itemtext = item[0].text(0)
-        layername = itemtext.split(':')
-        
-        print(itemtext)
+        #print(itemtext)
 
 
         

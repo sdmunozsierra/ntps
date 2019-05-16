@@ -27,7 +27,7 @@ class PacketManager:
         pcap.removePacket(packet)
         
     def getPcapPacket(self, name):
-        return pcap.getPacket(name)
+        return self.pcap.getPacket(name)
 
     def addToQueue(self, packet):
         self.queue.addPacket(packet)
