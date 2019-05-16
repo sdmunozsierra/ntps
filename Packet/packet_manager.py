@@ -43,6 +43,9 @@ class PacketManager(QObject):
     def dropFromQueue(self, packet):
         self.queue.dropPacket(packet)
 
+    def forwardFromQueue(self, packet):
+        self.queue.forwardPacket(packet)
+        
     def getQueuePacket(self, packetName):
         self.queue.getPacket(packetName)
 

@@ -40,9 +40,9 @@ class PCAP:
         #file.write("Hello")
         #file.close()
 
-    def load(self):
+    def load(filepath):
         # TODO: Transform info to packets
-        pcapfile = rdpcap(self.name)
+        pcapfile = rdpcap(filepath)
         i = 1
         for packet in pcapfile:
             self.packets.append(packet)
