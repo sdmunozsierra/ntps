@@ -27,11 +27,8 @@ class TestHook:
         # subprocess.run(["python3", "{}".format(hook), packet], capture_output=True)
         process = subprocess.Popen(["python3", "{}".format(hook), packet], stdout=subprocess.PIPE)
         out, err = process.communicate()
-        print(out)
-        # process = subprocess.Popen(['ls', '-a'], stdout=subprocess.PIPE)
-        # subprocess.run(["python3", "{}".format(hook), "/dev/null"], capture_output=True)
-        # option as shell
-        # subprocess.run("exit 1", shell=True, check=True)
+        # print(out)
+        return out
 
 
 class Hook:

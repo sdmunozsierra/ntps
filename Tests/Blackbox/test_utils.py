@@ -1,6 +1,7 @@
 """Backbox test file for Utils.py"""
 import os
 from freezegun import freeze_time
+from scapy.packet import Packet
 from ntps import pyutils
 
 
@@ -20,3 +21,19 @@ def test_check_file_exists():
     curr_file = "{}{}".format(curr_file, '/test_utils.py')
     exists = pyutils.check_file_exists(curr_file)
     assert exists is True
+
+
+def test_load_packet():
+    """Check that a binary packet is transformed into a string."""
+    bin_pkt = 'E\x00\x00\x14\x00\x01\x00\x00@\x00|\xe7\x7f\x00\x00\x01\x7f\x00\x00\x01'
+    expected_pkt = str(b'E\x00\x00\x14\x00\x01\x00\x00@\x00|\xc3\xa7\x7f\x00\x00\x01\x7f\x00\x00\x01')
+    transformed_pkt = pyutils.load_packet(bin_pkt)
+    assert transformed_pkt == expected_pkt
+
+
+def test_unload_packet():
+    """Check that a string packet is transformed into a Packet."""
+    string_pkt = str(b'E\x00\x00\x14\x00\x01\x00\x00@\x00|\xc3\xa7\x7f\x00\x00\x01\x7f\x00\x00\x01')
+    expected_pkt = Packet(string_pkt)
+    transformed_pkt = pyutils.unload_packet(string_pkt)
+    assert transformed_pkt == expected_pkt
