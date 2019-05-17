@@ -1,6 +1,7 @@
 """
 PCAP class will provide its information to the classes that need it.
 """
+from scapy.all import sendp
 
 
 class Queue:
@@ -14,31 +15,32 @@ class Queue:
         self.size = newSize
 
     def forwardPacket(self, packet):
-        index = packets.index(packet)
-        if(index == 0):
-            InterceptionInterface.sendPacket(packets.pop([0]))
-        else:
-            while(index >= 0):
-                InterceptionInterface.sendPacket(packets.pop([0]))
-                index = index - 1
+        # index = self.packets.index(packet)
+        # if(index == 0):
+        sendp(self.packets.pop(0))
+        return
+        # else:
+        #     while(index >= 0):
+        #         InterceptionInterface.sendPacket(packets.pop([0]))
+        #         index = index - 1
 
     def dropPacket(self, packet):
-        packets.remove(packet)
+        self.packets.remove(packet)
 
     def addPacket(self, packet):
-        if(len(packets) >= size):
+        if(len(self.packets) >= self.size):
             return
         else:
-            packets.append(packet)
+            self.packets.append(packet)
 
     def getPackets(self):
-        return packets
+        return self.packets
 
-    def getPacket(self,packetName):
-        for packet in packets:
+    def getPacket(self, packetName):
+        for packet in self.packets:
             if(packet.getName() == packetName):
-                retrun packet
-
+                return packet
         return None
+
     def getSize(self):
-        return this.size
+        return self.size

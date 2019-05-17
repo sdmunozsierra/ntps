@@ -4,9 +4,11 @@ PCAP class will provide its information to the classes that need it.
 import os
 from scapy.all import *
 
-from packet import Packet
+from ntps.Packet import packet
+
 
 class PCAP:
+
     def __init__(self, name, timestamp):
         self.packets = list()
         self.testpackets = list()
@@ -17,7 +19,7 @@ class PCAP:
 
     def setName(self, newname):
         self.name = newname
-        
+
     def addPacket(self, packet):
         self.packets.append(packet)
 
@@ -63,10 +65,10 @@ class PCAP:
             print(testpkt.name)
             #print(testpkt.getName())
             self.testpackets.append(testpkt)
-            
+
             i += 1
 
-        #print("?")    
+        #print("?")
         pass
 
     def expand(self,x):
@@ -95,10 +97,10 @@ class PCAP:
 
 #for packet in pcap.packets:
 #    for layer in packet:
-        
-    
-    
-    
+
+
+
+
 #packets = sniff(iface = conf.iface, count = 10)
 #for pkt in packets:
 #    pkt.show()

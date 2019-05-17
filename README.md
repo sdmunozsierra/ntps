@@ -22,3 +22,7 @@ This project requires python 3 and modules listed below that can be installed vi
 ## Testing
 
 To run tests via pytest run ```pytest -v Tests/``` in the root directory.
+
+Test cases are divided in Blackbox and Whitebox testing.
+The syntax for test files is as follows:
+```test_*CLASS_NAME*_*TEST_NAME*```

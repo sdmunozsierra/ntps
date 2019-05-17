@@ -1,33 +1,35 @@
-#from packet import Packet
+"""
+Packet class will provide its information to the classes that need it.
+"""
 
 import os
 import sys
 
-fileDir= os.path.dirname(__file__)
-sys.path.append(fileDir)
+from ntps.Packet import pcap
+from ntps.Packet import queue
 
-from pcap import PCAP
-from queue import Queue
+# fileDir= os.path.dirname(__file__)
+# sys.path.append(fileDir)
 
 
 class PacketManager:
 
     def __init__(self):
-        self.queue = Queue(100)
+        self.queue = queue.Queue(100)
         self.pcap = None
-        
+
     def setQueueSize(self, size):
         self.queue.setSize(size)
 
     def loadPcap(self, name):
-        self.pcap = PCAP(name,0)
+        self.pcap = pcap.PCAP(name, 0)
         self.pcap.load()
-        
+
     def removeFromPcap(self, packet):
-        pcap.removePacket(packet)
-        
+        self.pcap.removePacket(packet)
+
     def getPcapPacket(self, name):
-        return pcap.getPacket(name)
+        return self.pcap.getPacket(name)
 
     def addToQueue(self, packet):
         self.queue.addPacket(packet)
@@ -36,7 +38,7 @@ class PacketManager:
         self.queue.getPacket(packetName)
 
     def getQueuePackets(self):
-        return queue.getPackets
+        return self.queue.getPackets
 
     def getPcapPackets(self):
         return self.pcap.getPackets()
