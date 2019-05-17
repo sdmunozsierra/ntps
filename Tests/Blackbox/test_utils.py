@@ -16,9 +16,7 @@ def test_get_timestamp():
 
 def test_check_file_exists():
     """Using this file to check if the file actually exists."""
-    curr_file = os.path.realpath('test_utils.py')
-    print(curr_file)
-    print("HI")
+    curr_file = os.path.dirname(os.path.abspath(__file__))
+    curr_file = "{}{}".format(curr_file, '/test_utils.py')
     exists = pyutils.check_file_exists(curr_file)
-    print(exists)
-    assert True is False
+    assert exists is True
