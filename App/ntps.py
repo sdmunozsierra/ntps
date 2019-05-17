@@ -55,15 +55,20 @@ class Ui_Main_Dialog(QObject):
     def dropPcapPacket(self):
         item = self.dissectedList_2.selectedItems()
         if item[0].childCount() == 0:
-            item = item[0].parent()
-        self.dissectedList_2.removeItemWidget(item)
+            item[0] = item[0].parent()
+        #self.dissectedList_2.removeItemWidget(item[0],0)
+        self.dissectedList_2.takeTopLevelItem(self.dissectedList_2.indexOfTopLevelItem(item[0]))
+        self.packetManager.removeFromPcap(item[0].text(0))
+        #print("testing drop")
         
     def dropQueuePacket(self):
         item = self.dissectedList.selectedItems()
         if item[0].childCount() == 0:
-            item = item[0].parent()
-        self.dissectedList.removeItemWidget(item)
-        pass
+            item[0] = item[0].parent()
+        #self.dissectedList_2.removeItemWidget(item[0],0)
+        self.dissectedList.takeTopLevelItem(self.dissectedList.indexOfTopLevelItem(item[0]))
+        self.packetManager.dropFromQueue(item[0].text(0))
+        #print("testing drop")
         
 
     def loadPcap(self):
