@@ -2,7 +2,7 @@
 Layer class will provide its information to the classes that need it.
 """
 
-from field import Field
+from Packet.field import Field
 
 class Layer:
 
