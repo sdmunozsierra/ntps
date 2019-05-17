@@ -8,7 +8,7 @@ class Packet:
     def __init__(self, newname, rawlayers):
         self.name = newname
         self.timestamp = get_timestamp()
-
+        #self.layers = rawLayers
         self.layers = list()
         pos = 0
         for rlayer in rawlayers:
