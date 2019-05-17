@@ -7,11 +7,15 @@ from scapy.all import *
 from ntps.Packet import packet
 
 
+import subprocess
+
 class PCAP:
 
     def __init__(self, name, timestamp):
         self.packets = list()
         self.testpackets = list()
+        #filepath = "{}{}{}".format("/", self.name, ".pcap")
+
         self.name = name
         self.timestamp = timestamp
         #self.load()
@@ -38,9 +42,9 @@ class PCAP:
         #file.write("Hello")
         #file.close()
 
-    def load(self):
+    def load(filepath):
         # TODO: Transform info to packets
-        pcapfile = rdpcap('./Packet/test3.pcap')
+        pcapfile = rdpcap(filepath)
         i = 1
         for packet in pcapfile:
             self.packets.append(packet)
@@ -52,17 +56,18 @@ class PCAP:
             test.append(list(self.expand(self.packets[i])))
             i += 1
 
-        #print(test[0][0].name)
         i = 0
         while i < len(self.packets):
             pktname = "Frame " + str(i+1) + ": "
+            layers = list()
             for layer in test[i]:
                 pktname += layer.name + " "
+                layers.append(layer)
             #print(pktname)
-            print(pktname)
-            testpkt = Packet(pktname, test[i])
+            #print(pktname)
+            testpkt = Packet(pktname, layers)
 
-            print(testpkt.name)
+            #print(testpkt.name)
             #print(testpkt.getName())
             self.testpackets.append(testpkt)
 
@@ -77,7 +82,7 @@ class PCAP:
             #print(x.payload)
             x = x.payload
             yield x
-        print("!")
+        #print("!")
 
     def getPackets(self):
         return self.testpackets

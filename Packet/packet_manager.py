@@ -7,14 +7,16 @@ import sys
 
 from ntps.Packet import pcap
 from ntps.Packet import queue
+from ntps.Packet import packet
+from PyQt5.QtCore import QObject, pyqtSignal
 
-# fileDir= os.path.dirname(__file__)
-# sys.path.append(fileDir)
 
+class PacketManager(QObject):
 
-class PacketManager:
+    queuesignalAdd = pyqtSignal(packet.Packet)
 
     def __init__(self):
+        super().__init__()
         self.queue = queue.Queue(100)
         self.pcap = None
 
@@ -29,10 +31,19 @@ class PacketManager:
         self.pcap.removePacket(packet)
 
     def getPcapPacket(self, name):
-        return self.pcap.getPacket(name)
+        pkt = self.pcap.getPacket(name)
+        self.queuesignalAdd.emit(pkt)
+        return pkt
 
     def addToQueue(self, packet):
         self.queue.addPacket(packet)
+        self.queuesignalAdd.emit(packet)
+
+    def dropFromQueue(self, packet):
+        self.queue.dropPacket(packet)
+
+    def forwardFromQueue(self, packet):
+        self.queue.forwardPacket(packet)
 
     def getQueuePacket(self, packetName):
         self.queue.getPacket(packetName)
