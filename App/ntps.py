@@ -45,10 +45,25 @@ class Ui_Main_Dialog(QObject):
 
     def forwardQueuePacket(self):
         item = self.dissectedList.selectedItems()
+        if len(item) > 0:
+            idx = self.dissectedList.indexOfTopLevelItem(item[0])
+        else:
+            item = self.hexList.selectedItems()
+            if len(item) > 0:
+                idx = self.hexList.indexOfTopLevelItem(item[0])
         if item[0].childCount() == 0:
             item[0] = item[0].parent()
-        self.dissectedList.removeItemWidget(item)
-        packetManager.getQueuePacket(item[0].text(0))
+        #self.dissectedList_2.removeItemWidget(item[0],0)
+        i = 0
+        while i <= idx:
+            item[0] = self.dissectedList.takeTopLevelItem(i)
+            self.hexList.takeTopLevelItem(i)
+            
+            self.packetManager.forwardFromQueue(item[0].text(0))
+       
+        
+
+        
         
     def forwardPcapPacket(self):
         item = self.dissectedList_2.selectedItems()
@@ -56,28 +71,47 @@ class Ui_Main_Dialog(QObject):
             item[0] = item[0].parent()
         #self.dissectedList_2.removeItemWidget(item[0],0)
         self.dissectedList_2.takeTopLevelItem(self.dissectedList_2.indexOfTopLevelItem(item[0]))
-        self.packetManager.removeFromPcap(item[0].text(0))
+        #self.packetManager.removeFromPcap(item[0].text(0))
         #print("testing drop")
 
         pass
         
     def dropPcapPacket(self):
         item = self.dissectedList_2.selectedItems()
+        if len(item) > 0:
+            idx = self.dissectedList_2.indexOfTopLevelItem(item[0])
+        else:
+            item = self.hexList_2.selectedItems()
+            if len(item) > 0:
+                idx = self.hexList_2.indexOfTopLevelItem(item[0])
         if item[0].childCount() == 0:
             item[0] = item[0].parent()
         #self.dissectedList_2.removeItemWidget(item[0],0)
-        self.dissectedList_2.takeTopLevelItem(self.dissectedList_2.indexOfTopLevelItem(item[0]))
+        
+        item[0] = self.dissectedList_2.takeTopLevelItem(idx)
+        self.hexList_2.takeTopLevelItem(idx)
         self.packetManager.removeFromPcap(item[0].text(0))
        
-        item = item[0].parent()
-        self.dissectedList_2.removeItemWidget(item)
+        #item = item[0].parent()
+        #self.dissectedList_2.removeItemWidget(item)
  
-    def dropQueuePacket(self):
+    def dropQueuePacket(self):        
         item = self.dissectedList.selectedItems()
+        if len(item) > 0:
+            idx = self.dissectedList.indexOfTopLevelItem(item[0])
+        else:
+            item = self.hexList.selectedItems()
+            if len(item) > 0:
+                idx = self.hexList.indexOfTopLevelItem(item[0])
         if item[0].childCount() == 0:
-            item = item[0].parent()
-        self.dissectedList.removeItemWidget(item)
-        pass
+            item[0] = item[0].parent()
+        #self.dissectedList_2.removeItemWidget(item[0],0)
+        
+        item[0] = self.dissectedList.takeTopLevelItem(idx)
+        self.hexList.takeTopLevelItem(idx)
+        self.packetManager.removeFromPcap(item[0].text(0))
+       
+        
 
     def loadPcap(self):
 
