@@ -27,8 +27,16 @@ class PCAP:
     def addPacket(self, packet):
         self.rawpackets.append(packet)
 
-    def removePacket(self, packet):
-        self.rawpackets.remove(packet)
+    def removePacket(self, packetname):
+        #self.rawpackets.remove(packet)
+        for packet in self.packets:
+            if(packet.name == packetname):
+                idx = self.packets.index(packet)
+                self.rawpackets.remove(self.rawpackets[idx])
+                self.packets.remove(packet)
+
+        return None
+
 
     def save(self):
         # TODO: save to file

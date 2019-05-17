@@ -19,6 +19,7 @@ from GUI.createEditCollection import Ui_CreateEditCollectionWindow
 from GUI.createEditHook import Ui_CreateEditHookWindow
 from GUI.saveFuzzedPackets import Ui_saveFuzzedWindow
 
+from Interface.interface_manger import InterfaceManager
 
 class Ui_Main_Dialog(QObject):
     #packetManager = PacketManager()
@@ -2800,11 +2801,11 @@ class Ui_Main_Dialog(QObject):
         self.pcapFuzzButton.setText(_translate("Main_Dialog", "Fuzz"))
         self.pcapStopButton.setText(_translate("Main_Dialog", "Stop"))
         self.capFilterLabel2_2.setText(_translate("Main_Dialog", "Proxy Behavior"))
-        self.comboBox.setItemText(0, _translate("Main_Dialog", "Enabled"))
-        self.comboBox.setItemText(1, _translate("Main_Dialog", "Disabled"))
+        self.comboBox.setItemText(0, _translate("Main_Dialog", "Disabled"))
+        self.comboBox.setItemText(1, _translate("Main_Dialog", "Enabled"))
         self.label_6.setText(_translate("Main_Dialog", "Interception Behavior"))
-        self.comboBox_2.setItemText(0, _translate("Main_Dialog", "Enabled"))
-        self.comboBox_2.setItemText(1, _translate("Main_Dialog", "Disabled"))
+        self.comboBox_2.setItemText(0, _translate("Main_Dialog", "Disabled"))
+        self.comboBox_2.setItemText(1, _translate("Main_Dialog", "Enabled"))
         self.label_7.setText(_translate("Main_Dialog", "Queue Size"))
         self.capFilterLabel.setText(_translate("Main_Dialog", "Capture Filter"))
         self.capFilterLabel2.setText(_translate("Main_Dialog", "Filter"))
