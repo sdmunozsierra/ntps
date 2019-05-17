@@ -10,12 +10,12 @@ from Hooks import dns_sport, tcp_3handshake, tcp_sport
 
 class Hook:
 
-    def __init__(self, name, description, status, hookOrder, path):
+    def __init__(self, name, description, status, hook_order, path):
         self.path = path
         self.name = name
         self.description = description
         self.status = status  # Boolean
-        self.hookOrder = hookOrder
+        self.hook_order = hook_order
         self.real_name = extract_hook_name(self.path)
 
     def run_hook(self, a_hook, packet):
@@ -33,3 +33,11 @@ class Hook:
             r_hook = tcp_sport.TCPsport()
             return r_hook.change_sport(packet)
         return None
+
+    def get_hook_info(self, hook_name):
+        if self.name == hook_name:
+            info = f"Hook name: {self.name}\nHook description: {self.description}"
+            info = f"{info} Hook status: {self.status}\nHook order: {self.hook_order}"
+            info = f"{info} Hook real name: {self.real_name}"
+            print(info)
+        print(f"Hook {hook_name} not found")

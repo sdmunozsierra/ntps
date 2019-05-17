@@ -1,7 +1,7 @@
 
 import os
 from pyutils import create_packet
-from Hook.hook import hook, TestHook
+from Hook.hook import Hook
 
 
 class hookManager:
@@ -22,13 +22,9 @@ class hookManager:
     """
     @requires hook to be file, description to be string, stat to be the status, seq to be a int
     """
-
     def addhook(self, hookname, description, stat, seq, path):
-
-        # newhook = hook(hookname, description, stat, seq, path)
-        newhook = TestHook(hookname, description, stat, seq, path)
+        newhook = Hook(hookname, description, stat, seq, path)
         print("Hook object name is ", newhook.name)
-        #hook.addhook(hookname, description, stat, seq)
         self.hooks.append(newhook)
         fname = f"Hooks/{newhook.name}.py"
         print(fname)
@@ -42,33 +38,34 @@ class hookManager:
                 for line in f:
                     f1.write(line)
 
-
     def deletehook(self, hook):
-        try:
-            hook.deletehook(hook)
-        except:
-            print("Unable to search this hook")
+        """Removes a hook from the list."""
+        if hook in self.hooks:
+            print(f"Removing hook: {hook.name}")
+            self.hooks.remove(hook)
 
     def searchhook(self, hookname):
         for hook in self.hooks:
             if hook.name == hookname:
                 return hook
-
         return None
 
     def hookinfo(self, hook):
-        pass
+        # for hook in self.hooks:
+        #     hook.get_hook_info(hook)
+        # pass
+        if hook in self.hooks:
+            hook.get_hook_info(hook.name)
 
     def getHook(self, hookname):
-        pass
+        for hook in self.hooks:
+            if hook.name == hookname:
+                return hook
 
-    def runhook(self, hook, packet):
-        # TEST RUN HOOK
-        # pkt = 'E\x00\x00\x14\x00\x01\x00\x00@\x00|\xe7\x7f\x00\x00\x01\x7f\x00\x00\x01'
-        # pkt = create_packet(pkt)
-        # TODO check if packet is already a packet
-        hook.run_hook(hook, packet)
-        print("HOOK RUN")
+    def runhooks(self, packet):
+        """Runs all hooks in the hooks list."""
+        for hook in self.hooks:
+            hook.run_hook(hook, packet)
 
     def addHookColleciton(self, hook_collection):
         print("AddHookCollection")
