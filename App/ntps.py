@@ -12,7 +12,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import pyqtSlot, QObject
 
 from Packet.packet import Packet
-from Packet.packet_manager import PacketManager
 from Packet.pcap import PCAP
 
 from GUI.createEditCollection import Ui_CreateEditCollectionWindow
@@ -21,11 +20,12 @@ from GUI.saveFuzzedPackets import Ui_saveFuzzedWindow
 
 from Interface.interface_manager import InterfaceManager
 
+from pyglobals import h_manager
+from pyglobals import p_manager
+from pyglobals import i_manager
+
 
 class Ui_Main_Dialog(QObject):
-
-    # def __init__(self):
-        # self.h_manager = hookManager()
 
     def updatehookdisplay(self):
         name = self.ui.newHookName.text()
@@ -274,13 +274,14 @@ class Ui_Main_Dialog(QObject):
 
 
     def setupUi(self, Main_Dialog):
-        self.packetManager = PacketManager()
+        # self.packetManager = PacketManager()
+        # self.interfaceManager = InterfaceManager()
         # self.h_manager = hookManager()
-        self.interfaceManager = InterfaceManager()
+
+        self.hookManager = h_manager
+        self.packetManager = p_manager
+        self.interfaceManager = i_manager
         self.packetManager.queuesignalAdd.connect(self.updateAddQueue)
-
-
-
 
         Main_Dialog.setObjectName("Main_Dialog")
         Main_Dialog.resize(1061, 900)

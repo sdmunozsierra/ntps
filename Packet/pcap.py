@@ -7,8 +7,6 @@ from scapy.all import *
 from Packet.packet import Packet
 
 
-import subprocess
-
 class PCAP:
 
     def __init__(self, name, timestamp):
@@ -28,15 +26,14 @@ class PCAP:
         self.rawpackets.append(packet)
 
     def removePacket(self, packetname):
-        #self.rawpackets.remove(packet)
+        """Remove a packet using packet.name."""
         for packet in self.packets:
-            if(packet.name == packetname):
+            if packet.name == packetname:
                 idx = self.packets.index(packet)
                 self.rawpackets.remove(self.rawpackets[idx])
                 self.packets.remove(packet)
-                print(packet.hexpkt)
-
-        return None
+                return True
+        return False
 
 
     def save(self):
@@ -47,8 +44,10 @@ class PCAP:
 
         wrpcap(filepath, self.rawpackets)
 
-    def load(self):
+    def load(self, pcap_file=None):
         # TODO: Trnsform info to packets
+        if pcap_file:
+            self.name = pcap_file
         pcapfile = rdpcap(self.name)
         i = 1
         for packet in pcapfile:
@@ -72,7 +71,7 @@ class PCAP:
             #print(pktname)
             testpkt = Packet(pktname, layers, self.rawpackets[i])
             #testpkt = packet.TestPacket(pktname)
-            print(testpkt.name)
+            # print(testpkt.name)  # Frames
             #print(testpkt.getName())
             self.packets.append(testpkt)
 
@@ -99,18 +98,8 @@ class PCAP:
 
         return None
 
-#pcap = PCAP("test", 0)
-#pcap.save()
-#pcap.load()
-
-
-
-#for packet in pcap.packets:
-#    for layer in packet:
-
-
-
-
-#packets = sniff(iface = conf.iface, count = 10)
-#for pkt in packets:
-#    pkt.show()
+    def packetExists(self, pkt):
+        """Return true if the packet exists."""
+        if pkt in self.packets:
+            return True
+        return False
