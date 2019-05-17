@@ -67,6 +67,9 @@ class hookManager:
         for hook in self.hooks:
             hook.run_hook(hook, packet)
 
+    def createHookCollection(self):
+        pass
+
     def addHookColleciton(self, hook_collection):
         print("AddHookCollection")
         return
