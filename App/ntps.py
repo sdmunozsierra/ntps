@@ -2738,6 +2738,8 @@ class Ui_Main_Dialog(QObject):
         self.live_packet_button.clicked.connect(self.PCAP_View.hide)
         self.capFilterApply.clicked.connect(self.comboBox.update)
         self.capFilterApply.clicked.connect(self.comboBox_2.update)
+        self.comboBox.currentTextChanged.connect(self.interfaceManager.toggleIPtableState)
+        self.comboBox_2.currentTextChanged.connect(self.interfaceManager.toggleIntercepting)
         self.capFilterApply.clicked.connect(self.queue_size.update)
         self.live_packet_button.clicked.connect(self.Live_Packet_View.show)
         self.hook_button.clicked.connect(self.Hook_view.show)
