@@ -1,13 +1,20 @@
-# Hello world with Kivy
-from kivy.app import App
-from kivy.uix.label import Label
+from scapy.all import *
 
 
-class FirstKivy(App):
+class DNSsport:
 
-    def build(self):
-        return Label(text="Hello Kivy!")
+    def __init__(self):
+        self.name = DNSsport
+
+    def changeSport(self, packet):
+        """Changes the port number.
+        :param packet: String packet sent from hook class.
+        """
+        sPort = 44444
+        if packet.haslayer(DNS):
+            packet.sport = sPort
+        return packet
 
 
-# Main
-FirstKivy().run()
+if __name__ == "__main__":
+    DNSsport().changeSport(sys.argv[1])

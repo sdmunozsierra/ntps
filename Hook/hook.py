@@ -6,10 +6,12 @@ import fnmatch
 import subprocess
 from pyutils import check_file_exists, extract_hook_name
 # from Hooks import *
-import Hooks
+# import Hooks
+from Hooks import DNSsport
 
 
 class TestHook:
+
     def __init__(self, name, description, status, hookOrder, path):
         self.path = path
         self.name = name
@@ -18,30 +20,32 @@ class TestHook:
         self.hookOrder = hookOrder
         self.real_name = extract_hook_name(self.path)
 
-    def run_hook(self, packet):
-        if self.real_name == "DNSsport":
+    def run_hook(self, a_hook, packet):
+        print("Will try to run hook_real name: {}".format(a_hook.real_name))
+        if a_hook.real_name == "DNSsport":
             print("Running DNSsport")
             # hook = DNSsport()
-            hook = Hooks.DNSsport.DNSsport()
-            return hook.changeSport(packet)
+            r_hook = DNSsport.DNSsport()
+            return r_hook.changeSport(packet)
+        return None
 
 
-    def run(self, hook, packet):
-        """Run a hook
-        :param hook: filepath containing hook.
-        :param packet: packet to be run by the hook.
-        """
-        self.status = True
-        if not check_file_exists(hook):
-            return  # No hook selected or valid (maybe raise exception)
-
-        # run without shell
-        # subprocess.run(["python3", "{}".format(hook), packet], capture_output=True)
-        process = subprocess.Popen(["python3", "{}".format(hook), packet], stdout=subprocess.PIPE)
-        out, err = process.communicate()
-        # print(out)
-        return out
-
+    # def run(self, hook, packet):
+    #     """Run a hook
+    #     :param hook: filepath containing hook.
+    #     :param packet: packet to be run by the hook.
+    #     """
+    #     self.status = True
+    #     if not check_file_exists(hook):
+    #         return  # No hook selected or valid (maybe raise exception)
+    #
+    #     # run without shell
+    #     # subprocess.run(["python3", "{}".format(hook), packet], capture_output=True)
+    #     process = subprocess.Popen(["python3", "{}".format(hook), packet], stdout=subprocess.PIPE)
+    #     out, err = process.communicate()
+    #     # print(out)
+    #     return out
+    #
 
 class hook:
 

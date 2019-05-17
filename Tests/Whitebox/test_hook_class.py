@@ -8,6 +8,10 @@ import pickle
 
 
 def test_run_hook():
+    test_hook = hook.TestHook("dummy", "description", True)
+
+
+def run_hook():
     """Test hook class."""
     test_hook = hook.TestHook("dummy", "description", True)
 

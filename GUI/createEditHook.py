@@ -12,21 +12,20 @@ from Hook.hook_manager import hookManager
 class Ui_CreateEditHookWindow(object):
     #Signal to send to GUI
     #signal = pyqtSignal(int)
-    
+
     def adding(self):
-        
+
         name = self.newHookName.text()
         hookdescription = self.newHookDescription.text()
         filepath = self.newHookPath.text()
 
         print("File path before sent to manager: ",filepath)
         print("Name", name)
-        
+
         manager = hookManager()
         manager.addhook(name, hookdescription, False, 0, filepath)
-        
+
     def browse(self):
-        
         filebrowser = QtWidgets.QFileDialog()
         filebrowser.setNameFilters(["Python files (*.py)"])
         filebrowser.selectNameFilter("Python files (*.py)")
@@ -35,7 +34,7 @@ class Ui_CreateEditHookWindow(object):
 
         filename = QtWidgets.QFileDialog.getOpenFileName(QtWidgets.QFileDialog(),"File Dialog", '', filters, selectedfilter)
 
-        
+
 
         if filename[0] == '':
             return
@@ -44,7 +43,7 @@ class Ui_CreateEditHookWindow(object):
 
         self.newHookPath.setText(_translate("CreateEditHookWindow", filename[0]))
 
-        
+
     def setupUi(self, CreateEditHookWindow):
         CreateEditHookWindow.setObjectName("CreateEditHookWindow")
         CreateEditHookWindow.resize(400, 214)
@@ -85,7 +84,7 @@ class Ui_CreateEditHookWindow(object):
         self.newHookBrowseButton.setObjectName("newHookBrowseButton")
 
         self.newHookBrowseButton.clicked.connect(self.browse)
-        
+
         self.horizontalLayout_4.addWidget(self.newHookBrowseButton)
 
         self.verticalLayout.addLayout(self.horizontalLayout_4)
@@ -99,9 +98,9 @@ class Ui_CreateEditHookWindow(object):
         self.newHookSaveButton.clicked.connect(self.adding)
         self.newHookSaveButton.clicked.connect(CreateEditHookWindow.close)
         #GUI call
-        
-        
-        
+
+
+
         self.horizontalLayout_5.addWidget(self.newHookSaveButton)
         self.newHookCancelButton = QtWidgets.QPushButton(CreateEditHookWindow)
         self.newHookCancelButton.setObjectName("newHookCancelButton")
@@ -135,4 +134,3 @@ if __name__ == "__main__":
     ui.setupUi(CreateEditHookWindow)
     CreateEditHookWindow.show()
     sys.exit(app.exec_())
-

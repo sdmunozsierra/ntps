@@ -21,13 +21,11 @@ class hookManager:
     """
     @requires hook to be file, description to be string, stat to be the status, seq to be a int
     """
-
     def addhook(self, hookname, description, stat, seq, path):
-
         # newhook = hook(hookname, description, stat, seq, path)
         newhook = TestHook(hookname, description, stat, seq, path)
         print("Hook object name is ", newhook.name)
-        #hook.addhook(hookname, description, stat, seq)
+        # hook.addhook(hookname, description, stat, seq)
         self.hooks.append(newhook)
         fname = f"Hooks/{newhook.name}.py"
         print(fname)
@@ -40,13 +38,6 @@ class hookManager:
             with open(fname, "w+") as f1:
                 for line in f:
                     f1.write(line)
-
-        # TEST RUN HOOK
-        pkt = 'E\x00\x00\x14\x00\x01\x00\x00@\x00|\xe7\x7f\x00\x00\x01\x7f\x00\x00\x01'
-        pkt = create_packet(pkt)
-        newhook.run_hook(pkt)
-        print("HOOK RUN")
-
 
     def deletehook(self, hook):
         try:
@@ -68,11 +59,12 @@ class hookManager:
         pass
 
     def runhook(self, hook):
-        try:
-            hook.run()
-        # TODO Create an exception for run hook
-        except:
-            print("Unable to run hook")
+        # TEST RUN HOOK
+        pkt = 'E\x00\x00\x14\x00\x01\x00\x00@\x00|\xe7\x7f\x00\x00\x01\x7f\x00\x00\x01'
+        pkt = create_packet(pkt)
+        # self.hooks[0].run_hook(newhook, pkt)
+        hook.run_hook(hook, pkt)
+        print("HOOK RUN")
 
     def addHookColleciton(self, hook_collection):
         print("AddHookCollection")
