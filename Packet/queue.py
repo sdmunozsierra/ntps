@@ -21,23 +21,26 @@ class Queue:
         self.size = newSize
 
     def forwardPacket(self, packet):
-        # index = self.packets.index(packet)
-        # if(index == 0):
-        sendp(self.packets.pop(0))
-        return
-        # else:
-        #     while(index >= 0):
-        #         InterceptionInterface.sendPacket(packets.pop([0]))
-        #         index = index - 1
+        index = self.packets.index(packet)
+        if(index == 0):
+            pkt = self.packets.pop(0)
+            sendp(pkt)
+            return
+        else:
+            while(index >= 0):
+                pkt = packets.pop(0)
+                sendp(pkt)
+                index = index - 1
 
     def dropPacket(self, packet):
         self.packets.remove(packet)
 
     def addPacket(self, packet):
         if(len(self.packets) >= self.size):
-            return
+            return False
         else:
             self.packets.append(packet)
+            return True
 
     def getPackets(self):
         return self.packets

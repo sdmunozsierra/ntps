@@ -42,6 +42,20 @@ class Ui_Main_Dialog(QObject):
         self.ui.setupUi(self.window)
         self.window.show()
 
+
+    def dropPcapPacket(self):
+        item = self.dissectedList_2.selectedItems()
+        if item[0].childCount() == 0:
+            item = item[0].parent()
+        self.dissectedList_2.removeItemWidget(item)
+        
+    def dropQueuePacket(self):
+        item = self.dissectedList.selectedItems()
+        if item[0].childCount() == 0:
+            item = item[0].parent()
+        self.dissectedList.removeItemWidget(item)
+        
+
     def loadPcap(self):
 
         filebrowser = QtWidgets.QFileDialog()
@@ -812,6 +826,11 @@ class Ui_Main_Dialog(QObject):
         self.horizontalLayout_13.addWidget(self.forwardButton_2)
         self.dropButton_2 = QtWidgets.QPushButton(self.fieldAreaPanel_2)
         self.dropButton_2.setObjectName("dropButton_2")
+
+
+        self.dropButton_2.clicked.connect(self.dropPcapPacket)
+
+        
         self.horizontalLayout_13.addWidget(self.dropButton_2)
         self.verticalLayout_41.addLayout(self.horizontalLayout_13)
         self.horizontalLayout_12.addWidget(self.fieldAreaPanel_2)
@@ -1235,6 +1254,11 @@ class Ui_Main_Dialog(QObject):
         self.horizontalLayout_2.addWidget(self.forwardButton)
         self.dropButton = QtWidgets.QPushButton(self.fieldAreaPanel)
         self.dropButton.setObjectName("dropButton")
+
+
+        self.dropButton.clicked.connect(self.dropQueuePacket)
+        
+        
         self.horizontalLayout_2.addWidget(self.dropButton)
         self.verticalLayout_51.addLayout(self.horizontalLayout_2)
         self.horizontalLayout.addWidget(self.fieldAreaPanel)
