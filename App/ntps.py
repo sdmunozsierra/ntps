@@ -65,7 +65,6 @@ class Ui_Main_Dialog(QObject):
             item = item[0].parent()
         self.dissectedList.removeItemWidget(item)
         pass
-        
 
     def loadPcap(self):
 
@@ -209,6 +208,7 @@ class Ui_Main_Dialog(QObject):
 
     def setupUi(self, Main_Dialog):
         self.packetManager = PacketManager()
+        self.interfaceManager = InterfaceManager()
         self.packetManager.queuesignalAdd.connect(self.updateAddQueue)
 
 
