@@ -7,10 +7,14 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from Hook.hookManager import hookManager
+from Hook.hook_manager import hookManager
 
 class Ui_CreateEditHookWindow(object):
+    #Signal to send to GUI
+    #signal = pyqtSignal(int)
+    
     def adding(self):
+        
         name = self.newHookName.text()
         hookdescription = self.newHookDescription.text()
         filepath = self.newHookPath.text()
@@ -94,6 +98,8 @@ class Ui_CreateEditHookWindow(object):
         #Save button
         self.newHookSaveButton.clicked.connect(self.adding)
         self.newHookSaveButton.clicked.connect(CreateEditHookWindow.close)
+        #GUI call
+        
         
         
         self.horizontalLayout_5.addWidget(self.newHookSaveButton)
