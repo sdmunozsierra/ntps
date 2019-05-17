@@ -27,8 +27,8 @@ class PacketManager(QObject):
         self.pcap = pcap.PCAP(name, 0)
         self.pcap.load()
 
-    def removeFromPcap(self, packet):
-        self.pcap.removePacket(packet)
+    def removeFromPcap(self, packetname):
+        self.pcap.removePacket(packetname)
 
     def getPcapPackets(self):
         return self.pcap.getPackets
