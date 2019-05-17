@@ -14,14 +14,13 @@ class Packet:
     def __init__(self, newname, rawlayers):
         self.name = newname
         self.timestamp = get_timestamp()
-
+        #self.layers = rawLayers
         self.layers = list()
         pos = 0
         for rlayer in rawlayers:
             layer = Layer(rlayer.payload, rlayer.name, rlayer.name, pos, rlayer.summary())
             self.layers.append(layer)
             pos += 1
-
 
     def getName(self):
         return self.name
