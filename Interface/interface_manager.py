@@ -11,12 +11,5 @@ class InterfaceManager:
     def toggleIPtableState(self):
         self.ip_table.toggleIPTableState()
         
-    def startIntercepting(self):
-        self.nfqueue.initialize()
-        
-    def stopInterception(self):
-        self.nfqueue.end()
-                
-    
-        
-    
+    def toggleIntercepting(self):
+        self.nfqueue.toggleIntercept()

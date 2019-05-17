@@ -16,7 +16,7 @@ class Packet:
         self.timestamp = get_timestamp()
         self.pkt = packet
         self.hexpkt = str(packet)
-        
+
         #self.layers = rawLayers
         self.layers = list()
         pos = 0
