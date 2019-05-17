@@ -3,19 +3,20 @@ PCAP class will provide its information to the classes that need it.
 """
 from scapy.all import sendp
 
-from packet import Packet, PCAP
+from Packet import packet
+from Packet import pcap
 import datetime
+
 
 class Queue:
     packets = list()
     size = 100
 
-
     def __init__(self, size):
         self.size = size
         date = datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y")
+        self.pcap = pcap.PCAP(date, 0)
 
-        self.pcap = PCAP(date, 0)
     def setSize(self, newSize):
         self.size = newSize
 

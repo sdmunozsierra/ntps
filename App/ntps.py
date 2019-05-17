@@ -10,13 +10,14 @@ import subprocess
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import pyqtSlot, QObject
-from GUI.createEditHook import Ui_CreateEditHookWindow
-from GUI.createEditCollection import Ui_CreateEditCollectionWindow
-from GUI.saveFuzzedPackets import Ui_saveFuzzedWindow
 
 from Packet.packet import Packet
 from Packet.packet_manager import PacketManager
 from Packet.pcap import PCAP
+
+from GUI.createEditCollection import Ui_CreateEditCollectionWindow
+from GUI.createEditHook import Ui_CreateEditHookWindow
+from GUI.saveFuzzedPackets import Ui_saveFuzzedWindow
 
 
 class Ui_Main_Dialog(QObject):
@@ -28,13 +29,13 @@ class Ui_Main_Dialog(QObject):
         self.ui.setupUi(self.window)
         self.window.show()
         #self.window.exec_()
-        
+
     def openCreateEditCollectionWindow(self):
         self.window = QtWidgets.QDialog()
         self.ui = Ui_CreateEditCollectionWindow()
         self.ui.setupUi(self.window)
         self.window.show()
-        
+
     def openSaveFuzzedWindow(self):
         self.window = QtWidgets.QDialog()
         self.ui = Ui_saveFuzzedWindow()
@@ -70,7 +71,7 @@ class Ui_Main_Dialog(QObject):
             self.dissectedList_2.addTopLevelItem(item)
             j = 0
             layer = packets[i].getLayers()
-            
+
             while j < len(layer):
                 subitem = QtWidgets.QTreeWidgetItem(item)
                 subitemText = layer[j].show_name + ": " + layer[j].value#summary()
@@ -90,7 +91,7 @@ class Ui_Main_Dialog(QObject):
         self.dissectedList_2.addTopLevelItem(item)
         j = 0
         layer = packet.getLayers()
-        
+
         while j < len(layer):
             subitem = QtWidgets.QTreeWidgetItem(item)
             subitemText = layer[j].show_name + ": " + layer[j].value#summary()
@@ -98,11 +99,11 @@ class Ui_Main_Dialog(QObject):
             item.addChild(subitem)
             j += 1
 
-    
+
     def updateDropQueue(self,packet):
-        ###TODO            
+        ###TODO
         pass
-        
+
     def hookTest(self):
         item = self.dissectedList_2.selectedItems()
         if item[0].childCount() > 0:
@@ -119,13 +120,13 @@ class Ui_Main_Dialog(QObject):
         print("hhoktest")
         print(test)
 
-    def displayPcapFields(self):  
+    def displayPcapFields(self):
         item = self.dissectedList_2.selectedItems()
         if item[0].childCount() > 0:
             return
         #i = 0
         self.fieldAttList_2.clear()
-        
+
         itemparent = item[0].parent()
         packetname = itemparent.text(0)
 
@@ -158,12 +159,12 @@ class Ui_Main_Dialog(QObject):
             item.setText(1, _translate("Main_Dialog", str(fields[i].value)))
             item.setText(2, _translate("Main_Dialog", str(fields[i].mask)))
             item.setText(3, _translate("Main_Dialog", str(fields[i].display_format)))
-            
-            
+
+
             self.fieldAttList_2.addTopLevelItem(item)
             #j = 0
             #layer = packets[i].getLayers()
-           # 
+           #
             #while j < len(layer):
             #    subitem = QtWidgets.QTreeWidgetItem(item)
             #    subitemText = layer[j].name + ": " + layer[j].summary()
@@ -172,15 +173,15 @@ class Ui_Main_Dialog(QObject):
             #    j += 1
             i += 1
 
-        
+
         print("pog")
         #itemtext = item[0].text(0)
         #layername = itemtext.split(':')
-        
+
         #print(itemtext)
 
 
-        
+
     def setupUi(self, Main_Dialog):
         self.packetManager = PacketManager()
         self.packetManager.queuesignalAdd.connect(self.updateAddQueue)
@@ -536,7 +537,7 @@ class Ui_Main_Dialog(QObject):
 
         #################################### PCAP VIEW ###################
 
-        
+
         self.Content_View.setPalette(palette)
         self.Content_View.setAutoFillBackground(True)
         self.Content_View.setAlignment(QtCore.Qt.AlignCenter)
@@ -613,7 +614,7 @@ class Ui_Main_Dialog(QObject):
 
         self.pcapOpenButton.clicked.connect(self.loadPcap)
 
-        
+
         self.horizontalLayout_21.addWidget(self.pcapOpenButton)
         self.pcapCancelButton = QtWidgets.QPushButton(self.pcapFilePanel)
         self.pcapCancelButton.setObjectName("pcapCancelButton")
@@ -927,9 +928,9 @@ class Ui_Main_Dialog(QObject):
         self.horizontalLayout_26.addWidget(self.pcapFuzzButton)
         self.pcapStopButton = QtWidgets.QPushButton(self.fuzzingAreaPanel_2)
         self.pcapStopButton.setObjectName("pcapStopButton")
-        
+
         self.pcapStopButton.clicked.connect(self.openSaveFuzzedWindow)
-        
+
         self.horizontalLayout_26.addWidget(self.pcapStopButton)
         self.verticalLayout_43.addLayout(self.horizontalLayout_26)
         self.horizontalLayout_12.addWidget(self.fuzzingAreaPanel_2)
@@ -970,7 +971,7 @@ class Ui_Main_Dialog(QObject):
 
 ############################################ PACKET VIEW #####################################
 
-        
+
         self.Live_Packet_View.setPalette(palette)
         self.Live_Packet_View.setAutoFillBackground(True)
         self.Live_Packet_View.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -1346,13 +1347,13 @@ class Ui_Main_Dialog(QObject):
         spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_25.addItem(spacerItem3)
         self.livePacketFuzzButton = QtWidgets.QPushButton(self.fuzzingAreaPanel)
-        self.livePacketFuzzButton.setObjectName("livePacketFuzzButton")        
+        self.livePacketFuzzButton.setObjectName("livePacketFuzzButton")
         self.horizontalLayout_25.addWidget(self.livePacketFuzzButton)
         self.livePacketStopButton = QtWidgets.QPushButton(self.fuzzingAreaPanel)
         self.livePacketStopButton.setObjectName("livePacketStopButton")
-        
+
         self.livePacketStopButton.clicked.connect(self.openSaveFuzzedWindow)
-        
+
         self.horizontalLayout_25.addWidget(self.livePacketStopButton)
         self.verticalLayout_52.addLayout(self.horizontalLayout_25)
         self.horizontalLayout.addWidget(self.fuzzingAreaPanel)
@@ -1393,7 +1394,7 @@ class Ui_Main_Dialog(QObject):
 
 ################################# HOOK VIEW ###########################################
 
-        
+
         self.Hook_view.setPalette(palette)
         self.Hook_view.setAutoFillBackground(True)
         self.Hook_view.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -1430,15 +1431,15 @@ class Ui_Main_Dialog(QObject):
         self.horizontalLayout_23.setObjectName("horizontalLayout_23")
         self.add_hook_button = QtWidgets.QPushButton(self.interception_settings_2)
         self.add_hook_button.setObjectName("add_hook_button")
-        
+
         self.add_hook_button.clicked.connect(self.openCreateEditHookWindow)
-        
+
         self.horizontalLayout_23.addWidget(self.add_hook_button)
         self.edit_hook = QtWidgets.QPushButton(self.interception_settings_2)
         self.edit_hook.setObjectName("edit_hook")
-        
+
         self.edit_hook.clicked.connect(self.openCreateEditHookWindow)
-        
+
         self.horizontalLayout_23.addWidget(self.edit_hook)
         self.delete_hook_button = QtWidgets.QPushButton(self.interception_settings_2)
         self.delete_hook_button.setObjectName("delete_hook_button")
@@ -1977,7 +1978,7 @@ class Ui_Main_Dialog(QObject):
 ################################ HOOK COLLECTION ####################################
 
 
-        
+
         self.Hook_Collection_View.setPalette(palette)
         self.Hook_Collection_View.setAutoFillBackground(True)
         self.Hook_Collection_View.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -2014,15 +2015,15 @@ class Ui_Main_Dialog(QObject):
         self.horizontalLayout_35.setObjectName("horizontalLayout_35")
         self.add_hook_button_5 = QtWidgets.QPushButton(self.interception_settings_6)
         self.add_hook_button_5.setObjectName("add_hook_button_5")
-        
+
         self.add_hook_button_5.clicked.connect(self.openCreateEditCollectionWindow)
-        
+
         self.horizontalLayout_35.addWidget(self.add_hook_button_5)
         self.edit_hook_5 = QtWidgets.QPushButton(self.interception_settings_6)
         self.edit_hook_5.setObjectName("edit_hook_5")
-        
+
         self.edit_hook_5.clicked.connect(self.openCreateEditCollectionWindow)
-        
+
         self.horizontalLayout_35.addWidget(self.edit_hook_5)
         self.delete_hook_button_5 = QtWidgets.QPushButton(self.interception_settings_6)
         self.delete_hook_button_5.setObjectName("delete_hook_button_5")
@@ -2655,12 +2656,12 @@ class Ui_Main_Dialog(QObject):
         self.hook_collection_list.itemCollapsed['QTreeWidgetItem*'].connect(self.test_hook_list.hide)
         self.hook_collection_list.itemExpanded['QTreeWidgetItem*'].connect(self.test_hook_list.raise_)
         QtCore.QMetaObject.connectSlotsByName(Main_Dialog)
-        
+
         self.hook_button.clicked.connect(self.updateTitle)
         self.hook_collection_button.clicked.connect(self.updateTitle)
         self.packet_pcap_button.clicked.connect(self.updateTitle)
         self.live_packet_button.clicked.connect(self.updateTitle)
-        
+
     def updateTitle(self):
             _translate = QtCore.QCoreApplication.translate
             if(self.PCAP_View.isVisible()):
@@ -2903,7 +2904,18 @@ class Ui_Main_Dialog(QObject):
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-family:\'.SF NS Text\'; font-size:18pt; color:#fb4f05;\">  Network Traffic Proxy System</span></p></body></html>"))
         self.textEdit.setReadOnly(True)
-        self.textEdit.setTextInteractionFlags(QtCore.Qt.NoTextInteraction) 
+        self.textEdit.setTextInteractionFlags(QtCore.Qt.NoTextInteraction)
+
+
+def run():
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    Main_Dialog = QtWidgets.QDialog()
+    ui = Ui_Main_Dialog()
+    ui.setupUi(Main_Dialog)
+    Main_Dialog.show()
+    sys.exit(app.exec_())
+
 
 if __name__ == "__main__":
     import sys
@@ -2913,4 +2925,3 @@ if __name__ == "__main__":
     ui.setupUi(Main_Dialog)
     Main_Dialog.show()
     sys.exit(app.exec_())
-

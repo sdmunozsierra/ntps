@@ -4,7 +4,7 @@ PCAP class will provide its information to the classes that need it.
 import os
 from scapy.all import *
 
-from ntps.Packet import packet
+from Packet import packet
 
 
 import subprocess

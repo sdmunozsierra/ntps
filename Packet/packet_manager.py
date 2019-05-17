@@ -5,11 +5,11 @@ Packet class will provide its information to the classes that need it.
 import os
 import sys
 
-from ntps.Packet import pcap
-from ntps.Packet import queue
-from ntps.Packet import packet
 from PyQt5.QtCore import QObject, pyqtSignal
 
+from Packet import queue
+from Packet import pcap
+from Packet import packet
 
 class PacketManager(QObject):
 
