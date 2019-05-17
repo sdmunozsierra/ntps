@@ -4,14 +4,13 @@ class hook:
     #lists of hooks
     global hooks
     global path
-    path = "usr/bin/ntps/hooks/"
 
     def __init__(self, name, description, status, hookOrder):
         self.name = name
         self.description = description
         self.status = status
         self.hookOrder = hookOrder
-    def addhook(self, hook):
+    def addhook(self, hook, path):
         try:
             hooks.insert(hook)
             #Create a file with it's path
