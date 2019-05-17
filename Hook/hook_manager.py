@@ -45,7 +45,7 @@ class hookManager:
         # TEST RUN HOOK
         pkt = 'E\x00\x00\x14\x00\x01\x00\x00@\x00|\xe7\x7f\x00\x00\x01\x7f\x00\x00\x01'
         pkt = create_packet(pkt)
-        newhook.run_hook(pkt)
+        newhook.run_hook(newhook, pkt)
         print("HOOK RUN")
 
 

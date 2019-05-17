@@ -4,12 +4,13 @@ from scapy.all import *
 class DNSsport:
 
     def __init__(self):
-        self.name = DNSsport
+        self.name = "DNSsport"
 
     def changeSport(self, packet):
         """Changes the port number.
         :param packet: String packet sent from hook class.
         """
+        print("Inside DNSport")
         sPort = 44444
         if packet.haslayer(DNS):
             packet.sport = sPort
