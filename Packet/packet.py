@@ -2,13 +2,7 @@
 Packet class will provide its information to the classes that need it.
 """
 from pyutils import get_timestamp
-# import os
-# import sys
-# fileDir= os.path.dirname(__file__)
-# sys.path.append(fileDir)
-
 from Packet.layer import Layer
-
 
 class Packet:
     def __init__(self, newname, rawlayers):
@@ -21,7 +15,6 @@ class Packet:
             layer = Layer(rlayer.payload, rlayer.name, rlayer.name, pos, rlayer.summary())
             self.layers.append(layer)
             pos += 1
-
 
     def getName(self):
         return self.name

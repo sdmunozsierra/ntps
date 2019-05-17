@@ -58,7 +58,3 @@ class hook:
         #Executes teh specified python code
         #Also assumes that the script name includes the .py
         exec(hook.name)
-
-
-
-
