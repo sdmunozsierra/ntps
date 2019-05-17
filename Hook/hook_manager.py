@@ -42,12 +42,6 @@ class hookManager:
                 for line in f:
                     f1.write(line)
 
-        # TEST RUN HOOK
-        pkt = 'E\x00\x00\x14\x00\x01\x00\x00@\x00|\xe7\x7f\x00\x00\x01\x7f\x00\x00\x01'
-        pkt = create_packet(pkt)
-        newhook.run_hook(newhook, pkt)
-        print("HOOK RUN")
-
 
     def deletehook(self, hook):
         try:
@@ -68,12 +62,13 @@ class hookManager:
     def getHook(self, hookname):
         pass
 
-    def runhook(self, hook):
-        try:
-            hook.run()
-        # TODO Create an exception for run hook
-        except:
-            print("Unable to run hook")
+    def runhook(self, hook, packet):
+        # TEST RUN HOOK
+        # pkt = 'E\x00\x00\x14\x00\x01\x00\x00@\x00|\xe7\x7f\x00\x00\x01\x7f\x00\x00\x01'
+        # pkt = create_packet(pkt)
+        # TODO check if packet is already a packet
+        hook.run_hook(hook, packet)
+        print("HOOK RUN")
 
     def addHookColleciton(self, hook_collection):
         print("AddHookCollection")
