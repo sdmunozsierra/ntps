@@ -20,8 +20,13 @@ class Queue:
     def setSize(self, newSize):
         self.size = newSize
 
-    def forwardPacket(self, packet):
-        index = self.packets.index(packet)
+    def forwardPacket(self, packetname):
+        for packet in self.packets:
+            if(packet.name == packetname):
+                forwardpacket = packet
+                break
+
+        index = self.packets.index(forwardpacket)
         if(index == 0):
             pkt = self.packets.pop(0)
             sendp(pkt)
@@ -32,8 +37,13 @@ class Queue:
                 sendp(pkt)
                 index = index - 1
 
-    def dropPacket(self, packet):
-        self.packets.remove(packet)
+    def dropPacket(self, packetname):
+        #self.packets.remove(packet)
+        for packet in self.packets:
+            if(packet.name == name):
+                self.packets.remove(packet)
+                break
+
 
     def addPacket(self, packet):
         if(len(self.packets) >= self.size):

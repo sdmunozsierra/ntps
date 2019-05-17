@@ -40,12 +40,14 @@ class PacketManager(QObject):
         if self.queue.addPacket(packet):
             self.queuesignalAdd.emit(packet)
 
-    def dropFromQueue(self, packet):
-        self.queue.dropPacket(packet)
+    def dropFromQueue(self, packetname):
+        self.queue.dropPacket(packetname)
 
     def forwardFromQueue(self, packet):
         self.queue.forwardPacket(packet)
 
+    
+        
     def getQueuePacket(self, packetName):
         self.queue.getPacket(packetName)
 

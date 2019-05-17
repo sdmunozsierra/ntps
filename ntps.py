@@ -41,7 +41,16 @@ class Ui_Main_Dialog(QObject):
         self.ui.setupUi(self.window)
         self.window.show()
 
-
+    def forwardQueuePacket(self):
+        item = self.dissectedList.selectedItems()
+        if item[0].childCount() == 0:
+            item[0] = item[0].parent()
+        self.dissectedList.removeItemWidget(item)
+        packetManager.getQueuePacket(item[0].text(0))
+        
+    def forwardPcapPacket(self):
+        
+        
     def dropPcapPacket(self):
         item = self.dissectedList_2.selectedItems()
         if item[0].childCount() == 0:
@@ -53,6 +62,7 @@ class Ui_Main_Dialog(QObject):
         if item[0].childCount() == 0:
             item = item[0].parent()
         self.dissectedList.removeItemWidget(item)
+        item.
         
 
     def loadPcap(self):
@@ -822,6 +832,11 @@ class Ui_Main_Dialog(QObject):
         self.horizontalLayout_13.addWidget(self.packetSaveButton_2)
         self.forwardButton_2 = QtWidgets.QPushButton(self.fieldAreaPanel_2)
         self.forwardButton_2.setObjectName("forwardButton_2")
+
+
+        self.forwardButton_2.clicked.connect(self.forwardPcapPacket)
+
+        
         self.horizontalLayout_13.addWidget(self.forwardButton_2)
         self.dropButton_2 = QtWidgets.QPushButton(self.fieldAreaPanel_2)
         self.dropButton_2.setObjectName("dropButton_2")
@@ -1250,6 +1265,13 @@ class Ui_Main_Dialog(QObject):
         self.horizontalLayout_2.addWidget(self.packetSaveButton)
         self.forwardButton = QtWidgets.QPushButton(self.fieldAreaPanel)
         self.forwardButton.setObjectName("forwardButton")
+
+
+        self.forwardButton.clicked.connect(self.forwardQueuePacket)
+
+
+
+        
         self.horizontalLayout_2.addWidget(self.forwardButton)
         self.dropButton = QtWidgets.QPushButton(self.fieldAreaPanel)
         self.dropButton.setObjectName("dropButton")
