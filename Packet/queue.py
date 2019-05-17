@@ -16,6 +16,7 @@ class Queue:
         date = datetime.datetime.now().strftime("%I:%M%p on %B %d, %Y")
 
         self.pcap = pcap.PCAP(date, 0)
+
     def setSize(self, newSize):
         self.size = newSize
 
@@ -36,9 +37,10 @@ class Queue:
 
     def addPacket(self, packet):
         if(len(self.packets) >= self.size):
-            return
+            return False
         else:
             self.packets.append(packet)
+            return True
 
     def getPackets(self):
         return self.packets
