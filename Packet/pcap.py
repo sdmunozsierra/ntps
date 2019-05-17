@@ -40,16 +40,12 @@ class PCAP:
 
 
     def save(self):
-        # TODO: save to file
         if(not os.path.exists("./PCAPs")):
             os.makedirs("./PCAPs")
 
         filepath = "{}{}{}".format("/PCAPs/", self.name, ".pcap")
 
-        wrpcap(filepath, self.packets)
-        #file = open(filepath, 'w')
-        #file.write("Hello")
-        #file.close()
+        wrpcap(filepath, self.rawpackets)
 
     def load(self):
         # TODO: Trnsform info to packets
