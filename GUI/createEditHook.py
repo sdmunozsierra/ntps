@@ -8,7 +8,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from Hook.hook_manager import hookManager
-from App.ntps import h_manager
+from pyglobals import h_manager
 
 class Ui_CreateEditHookWindow(object):
     #Signal to send to GUI
