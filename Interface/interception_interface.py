@@ -14,6 +14,6 @@ class InterceptionInterface:
             self.intercepting = True
             print("Interception has been turned on.")
         else:
-            nfqueue.unbind()
+            self.nfqueue.unbind()
             print("Inteception has been turned off.")
             self.intercepting = False
