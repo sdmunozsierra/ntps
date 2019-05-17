@@ -156,7 +156,7 @@ class Ui_Main_Dialog(QObject):
                 j += 1
             i += 1
 
-        self.dissectedList_2.itemSelectionChanged.connect(self.displayPcapFields)
+        #self.dissectedList_2.itemSelectionChanged.connect(self.displayPcapFields)
 
     @pyqtSlot(Packet)
     def updateAddQueue(self,packet):
@@ -232,9 +232,9 @@ class Ui_Main_Dialog(QObject):
 
             item = QtWidgets.QTreeWidgetItem(self.fieldAttList_2)
             item.setText(0, _translate("Main_Dialog", fields[i].name))
-            item.setText(1, _translate("Main_Dialog", str(fields[i].value)))
-            item.setText(2, _translate("Main_Dialog", str(fields[i].mask)))
-            item.setText(3, _translate("Main_Dialog", str(fields[i].display_format)))
+            #item.setText(1, _translate("Main_Dialog", str(fields[i].payload)))
+            #item.setText(2, _translate("Main_Dialog", str(fields[i])))
+            #item.setText(3, _translate("Main_Dialog", "0"))
 
 
             self.fieldAttList_2.addTopLevelItem(item)

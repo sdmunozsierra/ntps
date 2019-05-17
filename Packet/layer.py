@@ -9,13 +9,13 @@ class Layer:
     ########## TODO: field array
 
 
-    def __init__(self, rawfields ,field_name, show_name, position, value):
+    def __init__(self, fields ,field_name, show_name, position, value):
         self.fields = list()
-        for rfield in rawfields:
-            field = Field(rfield.name, rfield.payload, rfield.payload, 0, False)
-            self.fields.append(field)
+        #for rfield in rawfields:
+        #    field = Field(rfield.name, rfield.payload, rfield.payload, 0, False)
+        #    self.fields.append(field)
 
-        #self.fields = fields
+        self.fields = fields
         self.field_name = field_name
         self.show_name = show_name
         self.size = None
