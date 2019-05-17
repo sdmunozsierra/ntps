@@ -2,6 +2,6 @@
 from ntps.Hook import hook
 
 
-def test_hook():
+def test_run_hook():
     """Test hook class."""
-    pass
+    test_hook = hook.TestHook("dummy", "description", True)
