@@ -38,6 +38,7 @@ class Ui_Main_Dialog(QObject):
         #self.window.exec_()
         name =self.ui.newHookName.text()
         if ui.newHookSaveButton.clicked.connect(CreadtedEditWindow.close):
+            print("in if")
             self.properties_list.topLevelItem(1).setText(0, _translate("Main_Dialog",name))
         #self.window.newHookSaveButton.clicked.connect(self.updatehookdisplay)
 
