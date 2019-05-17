@@ -12,10 +12,12 @@ class IPTable:
             rule = "iptables -A INPUT -j NFQUEUE --queue-num 1" 
             os.system(rule)
             self.status = True
+            print("IPTable rule has been set.")
         else:
             # Turn the IPtable off -D is to delete the current rules
             delete_rule = "iptables -D INPUT -j NFQueue --queue-num 1"
             os.system(delete_rule)
+            print("IPTable rule has been removed.")
             self.status = False
 
     def getStatus(self):
