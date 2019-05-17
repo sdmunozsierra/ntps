@@ -18,12 +18,11 @@ def get_timestamp():
 
 
 def extract_hook_name(filepath):
-    if not check_file_exists(filepath):
-        return  # Maybe raise error
-    hook_name = filepath.split('/')
-    hook_name = hook_name[-1]
-    hook_name.split(".")
-    hook_name = hook_name[0]
+    # if not check_file_exists(filepath):
+    #     return  # Maybe raise error
+    pre_hook_name = filepath.split('/')
+    hook_name = pre_hook_name[-1]
+    hook_name = hook_name[:-3]
     print("Extracted hook {}".format(hook_name))
     return hook_name
 
