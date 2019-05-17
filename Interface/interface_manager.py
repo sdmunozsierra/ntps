@@ -1,5 +1,5 @@
-from interception_interface import InterceptionInterface
-from ip_table import IPTable
+from Interface.interception_interface import InterceptionInterface
+from Interface.ip_table import IPTable
 import os, sys
 
 class InterfaceManager:
