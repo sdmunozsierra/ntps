@@ -34,39 +34,18 @@ class TestHook:
         # subprocess.run("exit 1", shell=True, check=True)
 
 
-class Hook:
+class hook:
 
     global hooks
     global path
 
-    def __init__(self, name, description, status, hookOrder):
-        self.path = None
+    def __init__(self, name, description, status, hookOrder, path):
+        self.path = path
         self.name = name
         self.description = description
         self.status = status  # Boolean
         self.hookOrder = hookOrder
 
-    def addhook(self, path, name, description):
-        self.paht = path
-        self.name = name
-        self.description = description
-        try:
-            hooks.insert(hook)
-            #Create a file with it's path
-            path =+ hook.name
-            if not os.path.exists(path):
-                os.mkdir(path)
-            else:
-                print("File already exists with same name")
-        except:
-            print("Unable to create new object, check parameters")
-
-    def gethookinfo(self, hook):
-        try:
-            hookinfo = [hook.name, hook.description, hook.status, hook.hookOrder]
-            return hookinfo
-        except:
-            print("Failed to find this hook's info")
     def searchhook(self, hookname):
        try:
             for file in os.listdir('.'):

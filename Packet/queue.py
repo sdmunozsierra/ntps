@@ -65,7 +65,6 @@ class Queue:
         #self.packets[1].show()
         #while i < len(self.rawpackets):
         test.append(list(self.expand(packet)))
-            i += 1
 
         #i = 0
         
@@ -76,7 +75,7 @@ class Queue:
             layers.append(layer)
         #print(pktname)
         #print(pktname)
-        testpkt = Packet(pktname, layers, self.rawpackets[i])
+        testpkt = Packet(pktname, layers, packet)
         #testpkt = packet.TestPacket(pktname)
         print(testpkt.name)
         #print(testpkt.getName())
