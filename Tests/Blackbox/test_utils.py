@@ -15,6 +15,13 @@ def test_get_timestamp():
     assert timestamp == "04:00:00"
 
 
+def test_extract_hook():
+    """Test extract hook name from a path."""
+    test_path = "blah/blah/blah/hook_name.py"
+    hook_name = pyutils.extract_hook_name(test_path)
+    assert hook_name == "hook_name"
+
+
 def test_check_file_exists():
     """Using this file to check if the file actually exists."""
     curr_file = os.path.dirname(os.path.abspath(__file__))

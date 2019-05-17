@@ -17,6 +17,16 @@ def get_timestamp():
     return timestamp
 
 
+def extract_hook_name(filepath):
+    # if not check_file_exists(filepath):
+    #     return  # Maybe raise error
+    pre_hook_name = filepath.split('/')
+    hook_name = pre_hook_name[-1]
+    hook_name = hook_name[:-3]
+    print("Extracted hook {}".format(hook_name))
+    return hook_name
+
+
 def check_file_exists(filepath):
     """Checks if the file exists."""
     # print("Checking if filepath {} is a file".format(filepath))

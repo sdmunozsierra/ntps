@@ -1,6 +1,9 @@
 
 import os
-from Hook.hook import hook
+from pyutils import create_packet
+from Hook.hook import Hook
+
+
 class hookManager:
     """
     Hooks will be created here
@@ -19,17 +22,11 @@ class hookManager:
     """
     @requires hook to be file, description to be string, stat to be the status, seq to be a int
     """
-
-    def addHook(self, hook):
-        self.hooks.append(hook)
-        
     def addhook(self, hookname, description, stat, seq, path):
-        
-        newhook = hook(hookname, description, stat, seq, path)
-        print("Hook object name is ",newhook.name)
-        #hook.addhook(hookname, description, stat, seq)
+        newhook = Hook(hookname, description, stat, seq, path)
+        print("Hook object name is ", newhook.name)
         self.hooks.append(newhook)
-        fname =f"Hooks/{newhook.name}.py"
+        fname = f"Hooks/{newhook.name}.py"
         print(fname)
         if not os.path.exists("Hooks/"):
             print("creating dir")
@@ -40,33 +37,38 @@ class hookManager:
             with open(fname, "w+") as f1:
                 for line in f:
                     f1.write(line)
-        
 
     def deletehook(self, hook):
-        try:
-            hook.deletehook(hook)
-        except:
-            print("Unable to search this hook")
+        """Removes a hook from the list."""
+        if hook in self.hooks:
+            print(f"Removing hook: {hook.name}")
+            self.hooks.remove(hook)
 
     def searchhook(self, hookname):
         for hook in self.hooks:
             if hook.name == hookname:
                 return hook
-
         return None
 
     def hookinfo(self, hook):
-        pass
+        # for hook in self.hooks:
+        #     hook.get_hook_info(hook)
+        # pass
+        if hook in self.hooks:
+            hook.get_hook_info(hook.name)
 
     def getHook(self, hookname):
+        for hook in self.hooks:
+            if hook.name == hookname:
+                return hook
+
+    def runhooks(self, packet):
+        """Runs all hooks in the hooks list."""
+        for hook in self.hooks:
+            hook.run_hook(hook, packet)
+
+    def createHookCollection(self):
         pass
-    
-    def runhook(self, hook):
-        try:
-            hook.run()
-        # TODO Create an exception for run hook
-        except:
-            print("Unable to run hook")
 
     def addHookColleciton(self, hook_collection):
         print("AddHookCollection")

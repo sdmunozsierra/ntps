@@ -1,8 +1,12 @@
 from scapy.all import *
 
-class TCPhandshake:
 
-    def handshake(self,packet):
+class TCP3Handshake:
+
+    def __init__(self):
+        self.name = "tcp_3handshake"
+
+    def handshake(self, packet):
         if(packet.haslayer(TCP)):
             source = packet.src
             destination = packet.dst
@@ -13,3 +17,4 @@ class TCPhandshake:
             ip = IP(src = destination, dst = source)
             packet_ack = TCP(sport = destinationPort, dport = sourcePort, flags = 'A', seq = sequence , ack = acknowledge)
             send(ip/packet_ack)
+        return packet
