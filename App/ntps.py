@@ -51,14 +51,27 @@ class Ui_Main_Dialog(QObject):
         packetManager.getQueuePacket(item[0].text(0))
         
     def forwardPcapPacket(self):
+        item = self.dissectedList_2.selectedItems()
+        if item[0].childCount() == 0:
+            item[0] = item[0].parent()
+        #self.dissectedList_2.removeItemWidget(item[0],0)
+        self.dissectedList_2.takeTopLevelItem(self.dissectedList_2.indexOfTopLevelItem(item[0]))
+        self.packetManager.removeFromPcap(item[0].text(0))
+        #print("testing drop")
+
         pass
         
     def dropPcapPacket(self):
         item = self.dissectedList_2.selectedItems()
         if item[0].childCount() == 0:
-            item = item[0].parent()
+            item[0] = item[0].parent()
+        #self.dissectedList_2.removeItemWidget(item[0],0)
+        self.dissectedList_2.takeTopLevelItem(self.dissectedList_2.indexOfTopLevelItem(item[0]))
+        self.packetManager.removeFromPcap(item[0].text(0))
+       
+        item = item[0].parent()
         self.dissectedList_2.removeItemWidget(item)
-        
+ 
     def dropQueuePacket(self):
         item = self.dissectedList.selectedItems()
         if item[0].childCount() == 0:
@@ -80,7 +93,7 @@ class Ui_Main_Dialog(QObject):
             return
 
         _translate = QtCore.QCoreApplication.translate
-
+        #self.binaryList_2
         self.pcapFilePath.setText(_translate("Main_Dialog", filename[0]))
         self.dissectedList_2.clear()
         self.packetManager.loadPcap(filename[0])
@@ -88,10 +101,15 @@ class Ui_Main_Dialog(QObject):
 
         i = 0
 
+        #hexdump(packet)
         print("test")
         while i < len(packets):#for packet in packets:
             item = QtWidgets.QTreeWidgetItem(self.dissectedList_2)
+            hexitem = QtWidgets.QTreeWidgetItem(self.hexList_2)
+            print("testttt")
             item.setText(0, _translate("Main_Dialog", packets[i].name))
+            hexitem.setText(0, _translate("Main_Dialog", packets[i].hexpkt))
+            self.hexList_2.addTopLevelItem(item)
             self.dissectedList_2.addTopLevelItem(item)
             j = 0
             layer = packets[i].getLayers()
