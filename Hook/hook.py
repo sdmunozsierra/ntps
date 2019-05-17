@@ -4,15 +4,27 @@ Cook class will provide its information to the classes that need it.
 import os
 import fnmatch
 import subprocess
-from pyutils import check_file_exists
+from pyutils import check_file_exists, extract_hook_name
+# from Hooks import *
+import Hooks
 
 
 class TestHook:
-    def __init__(self, name, description, status):
-        self.path = None
+    def __init__(self, name, description, status, hookOrder, path):
+        self.path = path
         self.name = name
         self.description = description
         self.status = status  # Boolean
+        self.hookOrder = hookOrder
+        self.real_name = extract_hook_name(self.path)
+
+    def run_hook(self, packet):
+        if self.real_name == "DNSsport":
+            print("Running DNSsport")
+            # hook = DNSsport()
+            hook = Hooks.DNSsport.DNSsport()
+            return hook.changeSport(packet)
+
 
     def run(self, hook, packet):
         """Run a hook

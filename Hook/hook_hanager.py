@@ -1,5 +1,8 @@
 import os
-from Hook.hook import hook
+from pyutils import create_packet
+from Hook.hook import hook, TestHook
+
+
 class hookManager:
     """
     Hooks will be created here
@@ -19,16 +22,14 @@ class hookManager:
     @requires hook to be file, description to be string, stat to be the status, seq to be a int
     """
 
-    def addHook(self, hook):
-        self.hooks.append(hook)
-        
     def addhook(self, hookname, description, stat, seq, path):
-        
-        newhook = hook(hookname, description, stat, seq, path)
-        print("Hook object name is ",newhook.name)
+
+        # newhook = hook(hookname, description, stat, seq, path)
+        newhook = TestHook(hookname, description, stat, seq, path)
+        print("Hook object name is ", newhook.name)
         #hook.addhook(hookname, description, stat, seq)
         self.hooks.append(newhook)
-        fname =f"Hooks/{newhook.name}.py"
+        fname = f"Hooks/{newhook.name}.py"
         print(fname)
         if not os.path.exists("Hooks/"):
             print("creating dir")
@@ -39,7 +40,13 @@ class hookManager:
             with open(fname, "w+") as f1:
                 for line in f:
                     f1.write(line)
-        
+
+        # TEST RUN HOOK
+        pkt = 'E\x00\x00\x14\x00\x01\x00\x00@\x00|\xe7\x7f\x00\x00\x01\x7f\x00\x00\x01'
+        pkt = create_packet(pkt)
+        newhook.run_hook(pkt)
+        print("HOOK RUN")
+
 
     def deletehook(self, hook):
         try:
@@ -59,7 +66,7 @@ class hookManager:
 
     def getHook(self, hookname):
         pass
-    
+
     def runhook(self, hook):
         try:
             hook.run()
