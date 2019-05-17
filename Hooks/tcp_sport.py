@@ -16,4 +16,3 @@ class TCPsport:
 
 if __name__ == "__main__":
     change_sport(sys.argv[1])
-    return

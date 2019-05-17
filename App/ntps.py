@@ -21,13 +21,17 @@ from GUI.saveFuzzedPackets import Ui_saveFuzzedWindow
 
 from Interface.interface_manager import InterfaceManager
 
+
 class Ui_Main_Dialog(QObject):
-    #packetManager = PacketManager()
+
+    # def __init__(self):
+        # self.h_manager = hookManager()
+
     def updatehookdisplay(self):
         name = self.ui.newHookName.text()
         self.properties_list.topLevelItem(1).setText(0, _translate("Main_Dialog", "Hook 1"))
         self.properties_list.topLevelItem(1).setText(1, _translate("Main_Dialog", "Description of Hook 1"))
-        
+
 
     def openCreateEditHookWindow(self):
         _translate = QtCore.QCoreApplication.translate
@@ -69,13 +73,13 @@ class Ui_Main_Dialog(QObject):
         while i <= idx:
             item[0] = self.dissectedList.takeTopLevelItem(i)
             self.hexList.takeTopLevelItem(i)
-            
-            self.packetManager.forwardFromQueue(item[0].text(0))
-       
-        
 
-        
-        
+            self.packetManager.forwardFromQueue(item[0].text(0))
+
+
+
+
+
     def forwardPcapPacket(self):
         item = self.dissectedList_2.selectedItems()
         if item[0].childCount() == 0:
@@ -86,7 +90,7 @@ class Ui_Main_Dialog(QObject):
         #print("testing drop")
 
         pass
-        
+
     def dropPcapPacket(self):
         item = self.dissectedList_2.selectedItems()
         if len(item) > 0:
@@ -98,15 +102,15 @@ class Ui_Main_Dialog(QObject):
         if item[0].childCount() == 0:
             item[0] = item[0].parent()
         #self.dissectedList_2.removeItemWidget(item[0],0)
-        
+
         item[0] = self.dissectedList_2.takeTopLevelItem(idx)
         self.hexList_2.takeTopLevelItem(idx)
         self.packetManager.removeFromPcap(item[0].text(0))
-       
+
         #item = item[0].parent()
         #self.dissectedList_2.removeItemWidget(item)
- 
-    def dropQueuePacket(self):        
+
+    def dropQueuePacket(self):
         item = self.dissectedList.selectedItems()
         if len(item) > 0:
             idx = self.dissectedList.indexOfTopLevelItem(item[0])
@@ -117,12 +121,12 @@ class Ui_Main_Dialog(QObject):
         if item[0].childCount() == 0:
             item[0] = item[0].parent()
         #self.dissectedList_2.removeItemWidget(item[0],0)
-        
+
         item[0] = self.dissectedList.takeTopLevelItem(idx)
         self.hexList.takeTopLevelItem(idx)
         self.packetManager.removeFromPcap(item[0].text(0))
-       
-        
+
+
 
     def loadPcap(self):
 
@@ -271,6 +275,7 @@ class Ui_Main_Dialog(QObject):
 
     def setupUi(self, Main_Dialog):
         self.packetManager = PacketManager()
+        # self.h_manager = hookManager()
         self.interfaceManager = InterfaceManager()
         self.packetManager.queuesignalAdd.connect(self.updateAddQueue)
 
@@ -901,7 +906,7 @@ class Ui_Main_Dialog(QObject):
 
         self.forwardButton_2.clicked.connect(self.forwardPcapPacket)
 
-        
+
         self.horizontalLayout_13.addWidget(self.forwardButton_2)
         self.dropButton_2 = QtWidgets.QPushButton(self.fieldAreaPanel_2)
         self.dropButton_2.setObjectName("dropButton_2")
@@ -909,7 +914,7 @@ class Ui_Main_Dialog(QObject):
 
         self.dropButton_2.clicked.connect(self.dropPcapPacket)
 
-        
+
         self.horizontalLayout_13.addWidget(self.dropButton_2)
         self.verticalLayout_41.addLayout(self.horizontalLayout_13)
         self.horizontalLayout_12.addWidget(self.fieldAreaPanel_2)
@@ -1336,15 +1341,15 @@ class Ui_Main_Dialog(QObject):
 
 
 
-        
+
         self.horizontalLayout_2.addWidget(self.forwardButton)
         self.dropButton = QtWidgets.QPushButton(self.fieldAreaPanel)
         self.dropButton.setObjectName("dropButton")
 
 
         self.dropButton.clicked.connect(self.dropQueuePacket)
-        
-        
+
+
         self.horizontalLayout_2.addWidget(self.dropButton)
         self.verticalLayout_51.addLayout(self.horizontalLayout_2)
         self.horizontalLayout.addWidget(self.fieldAreaPanel)

@@ -8,6 +8,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from Hook.hook_manager import hookManager
+from App.ntps import h_manager
 
 class Ui_CreateEditHookWindow(object):
     #Signal to send to GUI
@@ -22,8 +23,9 @@ class Ui_CreateEditHookWindow(object):
         print("File path before sent to manager: ",filepath)
         print("Name", name)
 
-        manager = hookManager()
-        manager.addhook(name, hookdescription, False, 0, filepath)
+        # manager = hookManager()
+        # ntps.
+        h_manager.addhook(name, hookdescription, False, 0, filepath)
 
     def browse(self):
         filebrowser = QtWidgets.QFileDialog()
