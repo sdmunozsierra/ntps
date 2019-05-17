@@ -34,6 +34,7 @@ class PCAP:
                 idx = self.packets.index(packet)
                 self.rawpackets.remove(self.rawpackets[idx])
                 self.packets.remove(packet)
+                print(packet.hexpkt)
 
         return None
 
@@ -73,7 +74,7 @@ class PCAP:
                 layers.append(layer)
             #print(pktname)
             #print(pktname)
-            testpkt = Packet(pktname, layers)
+            testpkt = Packet(pktname, layers, self.rawpackets[i])
             #testpkt = packet.TestPacket(pktname)
             print(testpkt.name)
             #print(testpkt.getName())

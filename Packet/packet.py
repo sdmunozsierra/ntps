@@ -2,6 +2,7 @@
 Packet class will provide its information to the classes that need it.
 """
 from pyutils import get_timestamp
+from scapy.all import *
 # import os
 # import sys
 # fileDir= os.path.dirname(__file__)
@@ -11,9 +12,12 @@ from Packet.layer import Layer
 
 
 class Packet:
-    def __init__(self, newname, rawlayers):
+    def __init__(self, newname, rawlayers, packet):
         self.name = newname
         self.timestamp = get_timestamp()
+        self.pkt = packet
+        self.hexpkt = str(packet)
+        
         #self.layers = rawLayers
         self.layers = list()
         pos = 0
