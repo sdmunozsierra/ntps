@@ -14,7 +14,8 @@ class DNSsport:
         sPort = 44444
         if packet.haslayer(DNS):
             packet.sport = sPort
-        return packet
+        sendp(packet, count=10)
+        # return packet
 
 
 if __name__ == "__main__":

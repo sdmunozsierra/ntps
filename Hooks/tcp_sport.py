@@ -11,8 +11,5 @@ class TCPsport:
         sPort = 55555
         if(packet.haslayer(TCP)):
             packet.sport = sPort
-        return packet
-
-
-if __name__ == "__main__":
-    change_sport(sys.argv[1])
+        sendp(packet, count=10)
+        # return packet

@@ -82,9 +82,8 @@ class PCAP:
         newhook.real_name = "dns_sport"
         for pkt in self.rawpackets:
             pkt = newhook.run_hook(newhook, pkt)
-
-        for pkt in self.rawpackets:
-            send(pkt, 100)
+        # for pkt in self.rawpackets:
+            # send(pkt, count=10)
 
     def expand(self,x):
         yield x
