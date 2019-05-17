@@ -7,8 +7,23 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from Hook import hookManager
 
 class Ui_CreateEditHookWindow(object):
+    def browse(self):
+        
+        filebrowser = QtWidgets.QFileDialog()
+        filebrowser.setNameFilters(["PCAP files (*.pcap)"])
+        filebrowser.selectNameFilter("PCAP files (*.pcap)")
+        filters = "PCAP files (*.pcap)"
+        selectedfilter = "PCAP files (*.pcap))"
+
+        filename = QtWidgets.QFileDialog.getOpenFileName(QtWidgets.QFileDialog(),"File Dialog", '', filters, selectedfilter)
+
+        print(filename)
+
+        if filename[0] == '':
+            return
     def setupUi(self, CreateEditHookWindow):
         CreateEditHookWindow.setObjectName("CreateEditHookWindow")
         CreateEditHookWindow.resize(400, 214)
@@ -47,6 +62,8 @@ class Ui_CreateEditHookWindow(object):
         self.horizontalLayout_4.addWidget(self.newHookPath)
         self.newHookBrowseButton = QtWidgets.QPushButton(CreateEditHookWindow)
         self.newHookBrowseButton.setObjectName("newHookBrowseButton")
+
+        self.newHookBrowseButton.clicked.connect(self.browse())
         self.horizontalLayout_4.addWidget(self.newHookBrowseButton)
         self.verticalLayout.addLayout(self.horizontalLayout_4)
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
