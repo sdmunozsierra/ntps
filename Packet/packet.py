@@ -2,14 +2,16 @@
 Packet class will provide its information to the classes that need it.
 """
 from pyutils import get_timestamp
+<<<<<<< HEAD
 from scapy.all import *
 # import os
 # import sys
 # fileDir= os.path.dirname(__file__)
 # sys.path.append(fileDir)
 
+=======
+>>>>>>> d76e37759d52ca30c3c36707e9ffb327aaf39ab9
 from Packet.layer import Layer
-
 
 class Packet:
     def __init__(self, newname, rawlayers, packet):

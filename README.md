@@ -12,6 +12,10 @@ Isai Gonzalez, Julio De La Cruz, Oscar Galindo, Alan Caldelas, Sergio Sierra
 * To run the GUI, use python to run the NTPS.py file. The other files included are overlays like the "Create/Edit Hook Window". These files must be in the same directory.
 * We did not include error overlays as there would be no way to trigger them in this version of the project.
 
+## Run
+To run the app run the following command in a terminal:
+```python __main__.py```
+
 ## Requirements
 This project requires python 3 and modules listed below that can be installed via `pip install "packagename"`.
 
@@ -21,7 +25,7 @@ This project requires python 3 and modules listed below that can be installed vi
 
 ## Testing
 
-To run tests via pytest run ```pytest -v Tests/``` in the root directory.
+To run tests via pytest type ```python -m pytest -v Tests/``` in a terminal in the root directory.
 
 Test cases are divided in Blackbox and Whitebox testing.
 The syntax for test files is as follows:

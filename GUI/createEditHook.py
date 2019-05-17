@@ -10,20 +10,35 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from Hook import hookManager
 
 class Ui_CreateEditHookWindow(object):
+    def adding(self):
+        name = self.newHookName.text()
+        hookdescription = self.newHookDescription.text()
+        filepath = self.newHookPath.text()
+
+        print(filepath)
+
+        #hookManager.addhook(name, hookdescription, filename[0]
+        
     def browse(self):
         
         filebrowser = QtWidgets.QFileDialog()
-        filebrowser.setNameFilters(["PCAP files (*.pcap)"])
-        filebrowser.selectNameFilter("PCAP files (*.pcap)")
-        filters = "PCAP files (*.pcap)"
-        selectedfilter = "PCAP files (*.pcap))"
+        filebrowser.setNameFilters(["Python files (*.py)"])
+        filebrowser.selectNameFilter("Python files (*.py)")
+        filters = "Python files (*.py)"
+        selectedfilter = "Python files (*.py))"
 
         filename = QtWidgets.QFileDialog.getOpenFileName(QtWidgets.QFileDialog(),"File Dialog", '', filters, selectedfilter)
 
-        print(filename)
+        print(filename[0])
 
         if filename[0] == '':
             return
+
+        _translate = QtCore.QCoreApplication.translate
+
+        self.newHookPath.setText(_translate("CreateEditHookWindow", filename[0]))
+
+        
     def setupUi(self, CreateEditHookWindow):
         CreateEditHookWindow.setObjectName("CreateEditHookWindow")
         CreateEditHookWindow.resize(400, 214)
@@ -63,8 +78,10 @@ class Ui_CreateEditHookWindow(object):
         self.newHookBrowseButton = QtWidgets.QPushButton(CreateEditHookWindow)
         self.newHookBrowseButton.setObjectName("newHookBrowseButton")
 
-        self.newHookBrowseButton.clicked.connect(self.browse())
+        self.newHookBrowseButton.clicked.connect(self.browse)
+        
         self.horizontalLayout_4.addWidget(self.newHookBrowseButton)
+
         self.verticalLayout.addLayout(self.horizontalLayout_4)
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
@@ -72,6 +89,12 @@ class Ui_CreateEditHookWindow(object):
         self.horizontalLayout_5.addItem(spacerItem)
         self.newHookSaveButton = QtWidgets.QPushButton(CreateEditHookWindow)
         self.newHookSaveButton.setObjectName("newHookSaveButton")
+        #Save button
+        self.newHookSaveButton.clicked.connect(self.adding)
+        print(type(self.newHookPath.text()))
+        self.newHookSaveButton.clicked.connect(CreateEditHookWindow.close)
+        
+        
         self.horizontalLayout_5.addWidget(self.newHookSaveButton)
         self.newHookCancelButton = QtWidgets.QPushButton(CreateEditHookWindow)
         self.newHookCancelButton.setObjectName("newHookCancelButton")

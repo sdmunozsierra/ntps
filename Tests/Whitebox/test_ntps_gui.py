@@ -1,5 +1,5 @@
 """Whitebox test file for Utils.py"""
-from ntps import ntps
+from ntps.App import ntps
 
 
 def test_get_timestamp():
