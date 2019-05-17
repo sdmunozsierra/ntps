@@ -3,7 +3,8 @@ Cook class will provide its information to the classes that need it.
 """
 import os
 import fnmatch
-from Tests.Test_Hooks import DNSsport
+import subprocess
+from pyutils import check_file_exists
 
 
 class TestHook:
@@ -19,12 +20,18 @@ class TestHook:
         :param packet: packet to be run by the hook.
         """
         self.status = True
+        if not check_file_exists(hook):
+            return  # No hook selected or valid (maybe raise exception)
 
-        # os.system(hook.name)
-        #Executes teh specified python code
-        #Also assumes that the script name includes the .py
-        # exec(hook.name)
-        subprocess.run("exit 1", shell=True, check=True)
+        # run without shell
+        # subprocess.run(["python3", "{}".format(hook), packet], capture_output=True)
+        process = subprocess.Popen(["python3", "{}".format(hook), packet], stdout=subprocess.PIPE)
+        out, err = process.communicate()
+        print(out)
+        # process = subprocess.Popen(['ls', '-a'], stdout=subprocess.PIPE)
+        # subprocess.run(["python3", "{}".format(hook), "/dev/null"], capture_output=True)
+        # option as shell
+        # subprocess.run("exit 1", shell=True, check=True)
 
 
 class hook:

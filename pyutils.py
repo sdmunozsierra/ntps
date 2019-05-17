@@ -2,8 +2,8 @@
 Utility methods and helper methods used around the project.
 """
 import datetime
-import os
 import time
+from pathlib import Path
 
 
 def get_timestamp():
@@ -23,6 +23,9 @@ def get_filename(directory):
 
 def check_file_exists(filepath):
     """Checks if the file exists."""
-    if os.path.isfile(filepath):
+    # print("Checking if filepath {} is a file".format(filepath))
+    filepath = "{}".format(filepath)
+    fl = Path(filepath)
+    if fl.is_file():
         return True
     return False

@@ -29,11 +29,15 @@ class Queue:
         index = self.packets.index(forwardpacket)
         if(index == 0):
             pkt = self.packets.pop(0)
+            self.pcap.addPacket(pkt)
+            self.pcap.save()
             sendp(pkt)
             return
         else:
             while(index >= 0):
                 pkt = packets.pop(0)
+                self.pcap.addPacket(pkt)
+                self.pcap.save()
                 sendp(pkt)
                 index = index - 1
 

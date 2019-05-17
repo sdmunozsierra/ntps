@@ -55,10 +55,25 @@ class Ui_Main_Dialog(QObject):
 
     def forwardQueuePacket(self):
         item = self.dissectedList.selectedItems()
+        if len(item) > 0:
+            idx = self.dissectedList.indexOfTopLevelItem(item[0])
+        else:
+            item = self.hexList.selectedItems()
+            if len(item) > 0:
+                idx = self.hexList.indexOfTopLevelItem(item[0])
         if item[0].childCount() == 0:
             item[0] = item[0].parent()
-        self.dissectedList.removeItemWidget(item)
-        packetManager.getQueuePacket(item[0].text(0))
+        #self.dissectedList_2.removeItemWidget(item[0],0)
+        i = 0
+        while i <= idx:
+            item[0] = self.dissectedList.takeTopLevelItem(i)
+            self.hexList.takeTopLevelItem(i)
+            
+            self.packetManager.forwardFromQueue(item[0].text(0))
+       
+        
+
+        
         
     def forwardPcapPacket(self):
         item = self.dissectedList_2.selectedItems()
@@ -66,28 +81,47 @@ class Ui_Main_Dialog(QObject):
             item[0] = item[0].parent()
         #self.dissectedList_2.removeItemWidget(item[0],0)
         self.dissectedList_2.takeTopLevelItem(self.dissectedList_2.indexOfTopLevelItem(item[0]))
-        self.packetManager.removeFromPcap(item[0].text(0))
+        #self.packetManager.removeFromPcap(item[0].text(0))
         #print("testing drop")
 
         pass
         
     def dropPcapPacket(self):
         item = self.dissectedList_2.selectedItems()
+        if len(item) > 0:
+            idx = self.dissectedList_2.indexOfTopLevelItem(item[0])
+        else:
+            item = self.hexList_2.selectedItems()
+            if len(item) > 0:
+                idx = self.hexList_2.indexOfTopLevelItem(item[0])
         if item[0].childCount() == 0:
             item[0] = item[0].parent()
         #self.dissectedList_2.removeItemWidget(item[0],0)
-        self.dissectedList_2.takeTopLevelItem(self.dissectedList_2.indexOfTopLevelItem(item[0]))
+        
+        item[0] = self.dissectedList_2.takeTopLevelItem(idx)
+        self.hexList_2.takeTopLevelItem(idx)
         self.packetManager.removeFromPcap(item[0].text(0))
        
-        item = item[0].parent()
-        self.dissectedList_2.removeItemWidget(item)
+        #item = item[0].parent()
+        #self.dissectedList_2.removeItemWidget(item)
  
-    def dropQueuePacket(self):
+    def dropQueuePacket(self):        
         item = self.dissectedList.selectedItems()
+        if len(item) > 0:
+            idx = self.dissectedList.indexOfTopLevelItem(item[0])
+        else:
+            item = self.hexList.selectedItems()
+            if len(item) > 0:
+                idx = self.hexList.indexOfTopLevelItem(item[0])
         if item[0].childCount() == 0:
-            item = item[0].parent()
-        self.dissectedList.removeItemWidget(item)
-        pass
+            item[0] = item[0].parent()
+        #self.dissectedList_2.removeItemWidget(item[0],0)
+        
+        item[0] = self.dissectedList.takeTopLevelItem(idx)
+        self.hexList.takeTopLevelItem(idx)
+        self.packetManager.removeFromPcap(item[0].text(0))
+       
+        
 
     def loadPcap(self):
 
@@ -132,7 +166,7 @@ class Ui_Main_Dialog(QObject):
                 j += 1
             i += 1
 
-        self.dissectedList_2.itemSelectionChanged.connect(self.displayPcapFields)
+        #self.dissectedList_2.itemSelectionChanged.connect(self.displayPcapFields)
 
     @pyqtSlot(Packet)
     def updateAddQueue(self,packet):
@@ -208,9 +242,9 @@ class Ui_Main_Dialog(QObject):
 
             item = QtWidgets.QTreeWidgetItem(self.fieldAttList_2)
             item.setText(0, _translate("Main_Dialog", fields[i].name))
-            item.setText(1, _translate("Main_Dialog", str(fields[i].value)))
-            item.setText(2, _translate("Main_Dialog", str(fields[i].mask)))
-            item.setText(3, _translate("Main_Dialog", str(fields[i].display_format)))
+            #item.setText(1, _translate("Main_Dialog", str(fields[i].payload)))
+            #item.setText(2, _translate("Main_Dialog", str(fields[i])))
+            #item.setText(3, _translate("Main_Dialog", "0"))
 
 
             self.fieldAttList_2.addTopLevelItem(item)
@@ -2714,6 +2748,8 @@ class Ui_Main_Dialog(QObject):
         self.live_packet_button.clicked.connect(self.PCAP_View.hide)
         self.capFilterApply.clicked.connect(self.comboBox.update)
         self.capFilterApply.clicked.connect(self.comboBox_2.update)
+        self.comboBox.currentTextChanged.connect(self.interfaceManager.toggleIPtableState)
+        self.comboBox_2.currentTextChanged.connect(self.interfaceManager.toggleIntercepting)
         self.capFilterApply.clicked.connect(self.queue_size.update)
         self.live_packet_button.clicked.connect(self.Live_Packet_View.show)
         self.hook_button.clicked.connect(self.Hook_view.show)
