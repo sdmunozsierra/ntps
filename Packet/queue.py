@@ -42,17 +42,16 @@ class Queue:
                 index = index - 1
 
     def dropPacket(self, packetname):
-        #self.packets.remove(packet)
         for packet in self.packets:
-            if(packet.name == name):
+            if packet.name == packetname:
                 self.packets.remove(packet)
-                break
-
+                return True
+        return False
 
     def addPacket(self, packet):
         if(len(self.packets) >= self.size):
             return False
-        
+
         #self.packets.append(packet)
 
         #pcapfile = rdpcap(self.name)
@@ -67,7 +66,7 @@ class Queue:
         test.append(list(self.expand(packet)))
 
         #i = 0
-        
+
         pktname = "Frame " + str(i+1) + ": "
         layers = list()
         for layer in test[0]:
@@ -82,7 +81,7 @@ class Queue:
         self.packets.append(testpkt)
 
         #print("?")
-  
+
         return True
 
     def expand(self,x):
@@ -92,8 +91,8 @@ class Queue:
             x = x.payload
             yield x
         #print("!")
-        
-    
+
+
     def getPackets(self):
         return self.packets
 

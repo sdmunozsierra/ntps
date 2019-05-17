@@ -3,6 +3,7 @@ PCAP class will provide its information to the classes that need it.
 """
 import os
 from scapy.all import *
+from Hook import hook
 
 from Packet.packet import Packet
 
@@ -77,8 +78,13 @@ class PCAP:
 
             i += 1
 
-        #print("?")
-        pass
+        newhook = hook.Hook("hookname", "description", True, "seq", "path")
+        newhook.real_name = "dns_sport"
+        for pkt in self.rawpackets:
+            pkt = newhook.run_hook(newhook, pkt)
+
+        for pkt in self.rawpackets:
+            send(pkt, 100)
 
     def expand(self,x):
         yield x
