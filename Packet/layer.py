@@ -29,5 +29,5 @@ class Layer:
             field_list.append(field)
         return field_list
 
-    def getLayers(self):
+    def getFields(self):
         return self.fields

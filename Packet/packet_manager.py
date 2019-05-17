@@ -30,6 +30,9 @@ class PacketManager(QObject):
     def removeFromPcap(self, packet):
         self.pcap.removePacket(packet)
 
+    def getPcapPackets(self):
+        return self.pcap.getPackets
+        
     def getPcapPacket(self, name):
         #pkt = self.pcap.getPacket(name)
         #self.queuesignalAdd.emit(pkt)

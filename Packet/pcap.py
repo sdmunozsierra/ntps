@@ -4,7 +4,7 @@ PCAP class will provide its information to the classes that need it.
 import os
 from scapy.all import *
 
-from Packet import packet
+from Packet.packet import Packet
 
 
 import subprocess
@@ -65,9 +65,9 @@ class PCAP:
                 layers.append(layer)
             #print(pktname)
             #print(pktname)
-            testpkt = packet.Packet(pktname, layers)
-
-            #print(testpkt.name)
+            testpkt = Packet(pktname, layers)
+            #testpkt = packet.TestPacket(pktname)
+            print(testpkt.name)
             #print(testpkt.getName())
             self.packets.append(testpkt)
 
