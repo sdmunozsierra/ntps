@@ -31,13 +31,14 @@ class PacketManager(QObject):
         self.pcap.removePacket(packet)
 
     def getPcapPacket(self, name):
-        pkt = self.pcap.getPacket(name)
-        self.queuesignalAdd.emit(pkt)
-        return pkt
-
+        #pkt = self.pcap.getPacket(name)
+        #self.queuesignalAdd.emit(pkt)
+        #return pkt
+        return self.pcap.getPacket(name)
+        
     def addToQueue(self, packet):
-        self.queue.addPacket(packet)
-        self.queuesignalAdd.emit(packet)
+        if self.queue.addPacket(packet):
+            self.queuesignalAdd.emit(packet)
 
     def dropFromQueue(self, packet):
         self.queue.dropPacket(packet)
