@@ -19,7 +19,7 @@ from GUI.createEditCollection import Ui_CreateEditCollectionWindow
 from GUI.createEditHook import Ui_CreateEditHookWindow
 from GUI.saveFuzzedPackets import Ui_saveFuzzedWindow
 
-from Interface.interface_manger import InterfaceManager
+from Interface.interface_manager import InterfaceManager
 
 class Ui_Main_Dialog(QObject):
     #packetManager = PacketManager()
