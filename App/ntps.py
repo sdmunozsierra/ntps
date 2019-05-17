@@ -23,13 +23,23 @@ from Interface.interface_manager import InterfaceManager
 
 class Ui_Main_Dialog(QObject):
     #packetManager = PacketManager()
+    def updatehookdisplay(self):
+        name = self.ui.newHookName.text()
+        self.properties_list.topLevelItem(1).setText(0, _translate("Main_Dialog", "Hook 1"))
+        self.properties_list.topLevelItem(1).setText(1, _translate("Main_Dialog", "Description of Hook 1"))
+        
 
     def openCreateEditHookWindow(self):
+        _translate = QtCore.QCoreApplication.translate
         self.window = QtWidgets.QDialog()
         self.ui = Ui_CreateEditHookWindow()
         self.ui.setupUi(self.window)
         self.window.show()
         #self.window.exec_()
+        name =self.ui.newHookName.text()
+        if ui.newHookSaveButton.clicked.connect(CreadtedEditWindow.close):
+            self.properties_list.topLevelItem(1).setText(0, _translate("Main_Dialog",name))
+        #self.window.newHookSaveButton.clicked.connect(self.updatehookdisplay)
 
     def openCreateEditCollectionWindow(self):
         self.window = QtWidgets.QDialog()
