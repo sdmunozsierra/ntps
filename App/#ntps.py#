@@ -37,6 +37,7 @@ class Ui_Main_Dialog(QObject):
         self.window.show()
         #self.window.exec_()
         name =self.ui.newHookName.text()
+        
         #self.ui.newHookSaveButton.clicked.connect(self.ui.close)x
         print("in if")
         self.properties_list.topLevelItem(1).setText(0, _translate("Main_Dialog",name))
