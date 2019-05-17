@@ -52,10 +52,49 @@ class Queue:
     def addPacket(self, packet):
         if(len(self.packets) >= self.size):
             return False
-        else:
-            self.packets.append(packet)
-            return True
+        
+        #self.packets.append(packet)
 
+        #pcapfile = rdpcap(self.name)
+        #i = 1
+        #for packet in pcapfile:
+        #    self.rawpackets.append(packet)
+
+        i = 0
+        test = list()
+        #self.packets[1].show()
+        #while i < len(self.rawpackets):
+        test.append(list(self.expand(packet)))
+            i += 1
+
+        #i = 0
+        
+        pktname = "Frame " + str(i+1) + ": "
+        layers = list()
+        for layer in test[0]:
+            pktname += layer.name + " "
+            layers.append(layer)
+        #print(pktname)
+        #print(pktname)
+        testpkt = Packet(pktname, layers, self.rawpackets[i])
+        #testpkt = packet.TestPacket(pktname)
+        print(testpkt.name)
+        #print(testpkt.getName())
+        self.packets.append(testpkt)
+
+        #print("?")
+  
+        return True
+
+    def expand(self,x):
+        yield x
+        while x.payload:
+            #print(x.payload)
+            x = x.payload
+            yield x
+        #print("!")
+        
+    
     def getPackets(self):
         return self.packets
 
